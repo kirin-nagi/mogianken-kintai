@@ -17,8 +17,8 @@ use App\Http\Controllers\UserController;
 
 Route::get('/register',[UserController::class, 'register']);
 Route::post('/register',[UserController::class, 'store']);
-Route::get('/login', [UserController::class, 'login']);
-Route::post('/login', [UserController::class,'showlogin'])->name('login');
+Route::post('/login', [UserController::class, 'login']);
+Route::get('/login', [UserController::class,'showlogin'])->name('login');
 
 Route::middleware('auth')->group(function(){
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
