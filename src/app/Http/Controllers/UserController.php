@@ -45,7 +45,6 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
-    // コード書き直し
     public function logout()
     {
         return view('auth.login');
