@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'password_confirm',
+        // 管理者登録の欄
     ];
 
     /**
