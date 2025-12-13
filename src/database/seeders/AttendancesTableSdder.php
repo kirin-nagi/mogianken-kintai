@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class TimesTableSeeder extends Seeder
+class AttendancesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
