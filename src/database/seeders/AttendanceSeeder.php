@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Attendance;
 
-class StaffsTableSeeder extends Seeder
+class AttendanceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
