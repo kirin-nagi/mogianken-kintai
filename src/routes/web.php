@@ -21,7 +21,11 @@ Route::get('/register',[UserController::class, 'register']);
 Route::post('/register',[UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/login', [UserController::class,'showlogin'])->name('login');
+Route::get('/admin/login', [UserController::class, 'showadminlogin']);
 
 Route::middleware('auth')->group(function(){
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
+
+// 後からmiddlewareに入れる
+Route::get('/attendance', [AttendanceController::class, 'showattendance']);
