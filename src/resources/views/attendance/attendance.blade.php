@@ -7,7 +7,7 @@
 
 @section('content')
 
-<p>{{ now()->toDateString() }}</p>
+<p></p>
 <div class=""></div>
 
 @endsection

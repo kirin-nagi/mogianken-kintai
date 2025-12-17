@@ -16,11 +16,9 @@ class CreateAttendancesTable extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->time('start_work')->comment('出勤');
-            $table->time('end_work')->comment('退勤');
-            $table->time('total_work')->comment('合計');
-            $table->date('work_date')->comment('日付');
-            $table->unique(['user_id', 'work_date']);
+            $table->datetime('start_work')->comment('出勤');
+            $table->datetime('end_work')->comment('退勤');
+            $table->datetime('total_work')->comment('合計');
             $table->timestamps();
         });
     }
