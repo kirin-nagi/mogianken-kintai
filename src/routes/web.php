@@ -29,3 +29,9 @@ Route::middleware('auth')->group(function(){
 
 // 後からmiddlewareに入れる
 Route::get('/attendance', [AttendanceController::class, 'showattendance']);
+
+
+// 出勤時-> <form action="{{ route('attendance.start') }}" method="post">
+// 休憩時-> <form action="{{ route('attendance.rest_start') }}" method="post">
+// 退勤-> <form action="{{ route('attendance.end') }}" method="post">
+// 休憩終 -><form action="{{ route('attendance.rest_end') }}" method="post">

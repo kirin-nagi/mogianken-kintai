@@ -7,8 +7,55 @@
 
 @section('content')
 
-<p></p>
-<div class=""></div>
+<div class="date-time__content">
+    @php
+    $attendance = $todayAttendance;
+    @endphp
+
+    @if(!$attendance)
+    <p class="attendance-item">勤務外</p>
+    <div class="clock">
+        <div id="date"></div>
+        <div id="time"></div>
+    </div>
+    <form action="{{ route('attendance.start') }}" method="post">
+        @csrf
+        <button class="start-time">出勤</button>
+    </form>
+    @elseif ($attendance->isFinished())
+    <p class="attendance-item">退勤済</p>
+    <div class="clock">
+        <div id="date"></div>
+        <div id="time"></div>
+    </div>
+    <p class="end-time">お疲れさまでした。</p>
+    @elseif($attendance->isOnBreak())
+    <p class="attendance-item">休憩中</p>
+    <div class="clock">
+        <div id="date"></div>
+        <div id="time"></div>
+    </div>
+    <form action="{{ route('attendance.rest_end') }}" method="post">
+        @csrf
+        <button class="rest-time">休憩戻</button>
+    </form>
+    @else
+    <p class="attendance-item">出勤中</p>
+    <div class="clock">
+        <div id="date"></div>
+        <div id="time"></div>
+    </div>
+    <form action="{{ route('attendance.rest_start') }}" method="post">
+        @csrf
+        <button class="rest-time">休憩</button>
+    </form>
+    <form action="{{ route('attendance.end') }}" method="post">
+        @csrf
+        <button class="end-time">退勤</button>
+    </form>
+    @endif
+</div>
+
 
 @endsection
 
