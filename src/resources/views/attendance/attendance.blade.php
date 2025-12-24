@@ -8,10 +8,6 @@
 @section('content')
 
 <div class="date-time__content">
-    @php
-    $attendance = $todayAttendance;
-    @endphp
-
     @if(!$attendance)
     <p class="attendance-item">勤務外</p>
     <div class="clock">
@@ -29,7 +25,7 @@
         <div id="time"></div>
     </div>
     <p class="end-time">お疲れさまでした。</p>
-    @elseif($attendance->isOnBreak())
+    @elseif($attendance->isOnRest())
     <p class="attendance-item">休憩中</p>
     <div class="clock">
         <div id="date"></div>
@@ -55,7 +51,32 @@
     </form>
     @endif
 </div>
+@endsection
 
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded',() => {
+        function updateClock(){
+            const now = new Date();
 
+            document.getElementById('date').textContent =
+            now.toLocaleDateString('ja-JP', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long',
+            });
+
+            document.getElementById('time').textContent =
+            now.toLocaleTimeString('ja-JP',{
+                hour: '2-digit',
+                minute: '2-digit',
+            });
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    });
+</script>
 @endsection
 

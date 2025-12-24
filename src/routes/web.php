@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\StampController;
+use App\Http\Controllers\RestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,10 +28,9 @@ Route::middleware('auth')->group(function(){
 });
 
 // 後からmiddlewareに入れる
-Route::get('/attendance', [AttendanceController::class, 'showattendance']);
-
-
-// 出勤時-> <form action="{{ route('attendance.start') }}" method="post">
-// 休憩時-> <form action="{{ route('attendance.rest_start') }}" method="post">
-// 退勤-> <form action="{{ route('attendance.end') }}" method="post">
-// 休憩終 -><form action="{{ route('attendance.rest_end') }}" method="post">
+Route::get('/attendance', [AttendanceController::class, 'showattendance'])->name('attendance.show');
+Route::post('/attendance/start',[AttendanceController::class, 'start'])->name('attendance.start');
+Route::post('/attendance/end',[AttendanceController::class, 'end'])->name('attendance.end');
+Route::post('/attendance/rest_start',[AttendanceController::class, 'start'])->name('attendance.rest_start');
+Route::post('/attendance/rest_end',[AttendanceController::class, 'end'])->name('attendance.rest_end');
+Route::post('/attendance/thanks',[AttendanceController::class, 'thanks'])->name('attendance.thanks');
