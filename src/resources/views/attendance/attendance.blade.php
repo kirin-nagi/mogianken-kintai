@@ -21,15 +21,15 @@
     @elseif ($attendance->isFinished())
     <p class="attendance-item">退勤済</p>
     <div class="clock">
-        <div id="date"></div>
-        <div id="time"></div>
+        <div id="date" class="date"></div>
+        <div id="time" class="time"></div>
     </div>
     <p class="end-time">お疲れさまでした。</p>
     @elseif($attendance->isOnRest())
     <p class="attendance-item">休憩中</p>
     <div class="clock">
-        <div id="date"></div>
-        <div id="time"></div>
+        <div id="date" class="date"></div>
+        <div id="time" class="time"></div>
     </div>
     <form action="{{ route('attendance.rest_end') }}" method="post">
         @csrf
@@ -38,8 +38,8 @@
     @else
     <p class="attendance-item">出勤中</p>
     <div class="clock">
-        <div id="date"></div>
-        <div id="time"></div>
+        <div id="date" class="date"></div>
+        <div id="time" class="time"></div>
     </div>
     <form action="{{ route('attendance.rest_start') }}" method="post">
         @csrf
@@ -59,13 +59,11 @@
         function updateClock(){
             const now = new Date();
 
+            const weekdays = ['日','月','火','水','木','金','土'];
+            const day = weekdays[now.getDay()];
+
             document.getElementById('date').textContent =
-            now.toLocaleDateString('ja-JP', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                weekday: 'long',
-            });
+            `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日(${day})`;
 
             document.getElementById('time').textContent =
             now.toLocaleTimeString('ja-JP',{

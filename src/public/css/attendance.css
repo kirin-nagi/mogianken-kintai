@@ -1,0 +1,33 @@
+/*  出勤登録画面 出勤退勤・休憩始、終、if文で */
+.date-time__content{
+    margin: 0 auto;
+    padding: 200px 120px;
+    max-width: 680px;
+}
+
+.attendance-item{
+    width: 80px;
+    padding: 5px;
+    border-radius: 20px;
+    border: 1px solid #d3d0d0;
+    cursor: pointer;
+    margin-left: 200px;
+    color: #696969;
+    font-weight: bold;
+    font-size: 12px;
+    background-color: #d3d0d0;
+    text-align: center;
+}
+
+.clock{
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.date{
+    font-size: 22px;
+}
+
+.time{
+    font-size: 36px;
+}
