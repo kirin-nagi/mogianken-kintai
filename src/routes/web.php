@@ -34,3 +34,6 @@ Route::post('/attendance/end',[AttendanceController::class, 'end'])->name('atten
 Route::post('/attendance/rest_start',[AttendanceController::class, 'start'])->name('attendance.rest_start');
 Route::post('/attendance/rest_end',[AttendanceController::class, 'end'])->name('attendance.rest_end');
 Route::post('/attendance/thanks',[AttendanceController::class, 'thanks'])->name('attendance.thanks');
+
+
+Route::get('/attendance/list',[AttendanceController::class, 'showlist'])->name('attendance.list');

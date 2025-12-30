@@ -50,4 +50,10 @@ class AttendanceController extends Controller
 
         return redirect()->route('attendance.thanks');
     }
+
+    // 勤怠一覧確認用
+    public function showlist()
+    {
+        return view('attendance.list');
+    }
 }
