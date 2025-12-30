@@ -1,7 +1,7 @@
 /*  出勤登録画面 出勤退勤・休憩始、終、if文で */
 .date-time__content{
     margin: 0 auto;
-    padding: 200px 120px;
+    padding: 50px;
     max-width: 680px;
 }
 
@@ -11,7 +11,7 @@
     border-radius: 20px;
     border: 1px solid #d3d0d0;
     cursor: pointer;
-    margin-left: 200px;
+    margin-left: 150px;
     color: #696969;
     font-weight: bold;
     font-size: 12px;
@@ -30,4 +30,20 @@
 
 .time{
     font-size: 36px;
+    font-weight: bold;
+}
+
+.attendance__button{
+    text-align: center;
+    margin: 50px;
+}
+
+.attendance__button-submit{
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    width: 120px;
+    background: black;
+    color: #fff;
+    font-weight: bold;
 }

@@ -6,17 +6,16 @@
 @endsection
 
 @section('content')
-
 <div class="date-time__content">
     @if(!$attendance)
     <p class="attendance-item">勤務外</p>
     <div class="clock">
-        <div id="date"></div>
-        <div id="time"></div>
+        <div id="date" class="date"></div>
+        <div id="time" class="time"></div>
     </div>
-    <form action="{{ route('attendance.start') }}" method="post">
+    <form action="{{ route('attendance.start') }}" method="post" class="attendance__button">
         @csrf
-        <button class="start-time">出勤</button>
+        <button class="attendance__button-submit" type="submit">出勤</button>
     </form>
     @elseif ($attendance->isFinished())
     <p class="attendance-item">退勤済</p>
@@ -31,9 +30,9 @@
         <div id="date" class="date"></div>
         <div id="time" class="time"></div>
     </div>
-    <form action="{{ route('attendance.rest_end') }}" method="post">
+    <form action="{{ route('attendance.rest_end') }}" method="post" class="attendance__button">
         @csrf
-        <button class="rest-time">休憩戻</button>
+        <button class="attendance__button-submit" type="submit">休憩戻</button>
     </form>
     @else
     <p class="attendance-item">出勤中</p>
@@ -41,13 +40,13 @@
         <div id="date" class="date"></div>
         <div id="time" class="time"></div>
     </div>
-    <form action="{{ route('attendance.rest_start') }}" method="post">
+    <form action="{{ route('attendance.rest_start') }}" method="post" class="attendance__button">
         @csrf
-        <button class="rest-time">休憩</button>
+        <button class="attendance__button-submit" type="submit">休憩</button>
     </form>
-    <form action="{{ route('attendance.end') }}" method="post">
+    <form action="{{ route('attendance.end') }}" method="post" class="attendance__button">
         @csrf
-        <button class="end-time">退勤</button>
+        <button class="attendance__button-submit" type="submit">退勤</button>
     </form>
     @endif
 </div>
