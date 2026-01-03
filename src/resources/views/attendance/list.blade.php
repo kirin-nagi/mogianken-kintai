@@ -10,7 +10,6 @@
     <div class="attendance-list__heading">
         <p class="list-heading__item" >勤怠一覧</p>
     </div>
-    <!-- 教材見ながらやる -->
     <table>
         <tr>
             <th>日付</th>
@@ -22,22 +21,29 @@
         </tr>
         @foreach($attendances as $attendance)
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        @endforeach
-        @foreach($attendance->rests as $rest)
-        <tr>
-            <td></td>
-        </tr>
-        @endforeach
-        @foreach
-        <tr>
-            <td></td>
+            <td>
+                {{ $attendance->start_work->format('m/d') }}
+                ({{ [ '日','月','火','水','木','金','土',][$attendance->start_work->dayOfweek]}})
+            </td>
+            <td>
+                {{ $attendance->start_work->format('H:i') }}
+            </td>
+            <td>
+                {{ $attendance->end_work?->format('H:i') ?? '-' }}
+            </td>
+            <td>
+                {{ $attendance->total_rest_time }}
+            </td>
+            <td>
+                {{ $attendance->total_work_time }}
+            </td>
+            <td>
+                <a href="{{ route('attendance.detail', $attendance) }}">詳細</a>
+            </td>
         </tr>
         @endforeach
     </table>
 </div>
 @endsection
+
+<!-- 休みの日は何も表示されないように設定 -->

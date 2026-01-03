@@ -20,15 +20,15 @@ use App\Http\Controllers\RestController;
 Route::get('/register',[UserController::class, 'register']);
 Route::post('/register',[UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'login']);
-Route::get('/login', [UserController::class,'showlogin'])->name('login');
-Route::get('/admin/login', [UserController::class, 'showadminlogin']);
+Route::get('/login', [UserController::class,'showLogin'])->name('login');
+Route::get('/admin/login', [UserController::class, 'showAdminLogin']);
 
 Route::middleware('auth')->group(function(){
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
 // 後からmiddlewareに入れる
-Route::get('/attendance', [AttendanceController::class, 'showattendance'])->name('attendance.show');
+Route::get('/attendance', [AttendanceController::class, 'showAttendance'])->name('attendance.show');
 Route::post('/attendance/start',[AttendanceController::class, 'start'])->name('attendance.start');
 Route::post('/attendance/end',[AttendanceController::class, 'end'])->name('attendance.end');
 Route::post('/attendance/rest_start',[AttendanceController::class, 'start'])->name('attendance.rest_start');
@@ -36,4 +36,4 @@ Route::post('/attendance/rest_end',[AttendanceController::class, 'end'])->name('
 Route::post('/attendance/thanks',[AttendanceController::class, 'thanks'])->name('attendance.thanks');
 
 
-Route::get('/attendance/list',[AttendanceController::class, 'showlist'])->name('attendance.list');
+Route::get('/attendance/list',[AttendanceController::class, 'showList'])->name('attendance.list');

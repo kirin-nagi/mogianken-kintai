@@ -23,6 +23,16 @@ class Attendance extends Model
         return $this->hasMany(Rest::class);
     }
 
+    //休憩の合計を表示させる
+    public function getTotalRestTimeAttribute()
+    {
+        return $this->rests->sum(function ($rest){
+            if(!$rest->end_time) return 0;
+
+            return $rest->end_time->diffInMinutes($rest->start_time);
+        });
+    }
+
     // 当日の勤務
     public static function todayForUser(): ?self{
         return self::where('user_id', auth()->id())

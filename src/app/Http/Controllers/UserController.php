@@ -16,7 +16,7 @@ class UserController extends Controller
         return view('auth.register');
     }
 
-    public function showlogin()
+    public function showLogin()
     {
         return view('auth.login');
     }
@@ -45,7 +45,7 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
-    public function showadminlogin()
+    public function showAdminLogin()
     {
         return view('auth.admin_login');
     }

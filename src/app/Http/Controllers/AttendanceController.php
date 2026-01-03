@@ -11,7 +11,7 @@ class AttendanceController extends Controller
 {
 
     // 勤怠打刻画面
-    public function showattendance()
+    public function showAttendance()
     {
         $attendance = Attendance::todayForUser();
 
@@ -22,15 +22,15 @@ class AttendanceController extends Controller
     public function start()
     {
         if(Attendance::todayForUser()){
-            return redirect()->route('attendance.attendance');
+            return redirect()->route('attendance.show');
         }
 
         Attendance::create([
             'user_id' => auth()->id(),
-            'start_time' => now(),
+            'start_work' => now(),
         ]);
 
-        return redirect()->route('attendance.attendance');
+        return redirect()->route('attendance.show');
     }
 
     // 退勤
@@ -41,18 +41,18 @@ class AttendanceController extends Controller
 
         if(!$attendance || $attendance->isFinished() || $attendance->isOnRest())
         {
-            return redirect()->route('attendance.attendance');
+            return redirect()->route('attendance.show');
         }
 
         $attendance->update([
-            'end_time' => now(),
+            'end_work' => now(),
         ]);
 
         return redirect()->route('attendance.thanks');
     }
 
     // 勤怠一覧確認用
-    public function showlist()
+    public function showList()
     {
         return view('attendance.list');
     }
