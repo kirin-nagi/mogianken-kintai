@@ -31,8 +31,8 @@ Route::middleware('auth')->group(function(){
 Route::get('/attendance', [AttendanceController::class, 'showAttendance'])->name('attendance.show');
 Route::post('/attendance/start',[AttendanceController::class, 'start'])->name('attendance.start');
 Route::post('/attendance/end',[AttendanceController::class, 'end'])->name('attendance.end');
-Route::post('/attendance/rest_start',[AttendanceController::class, 'start'])->name('attendance.rest_start');
-Route::post('/attendance/rest_end',[AttendanceController::class, 'end'])->name('attendance.rest_end');
+Route::post('/attendance/rest_start',[AttendanceController::class, 'restStart'])->name('attendance.rest_start');
+Route::post('/attendance/rest_end',[AttendanceController::class, 'restEnd'])->name('attendance.rest_end');
 Route::post('/attendance/thanks',[AttendanceController::class, 'thanks'])->name('attendance.thanks');
 
 

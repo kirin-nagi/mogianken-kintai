@@ -17,8 +17,8 @@ class CreateAttendancesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->datetime('start_work')->comment('出勤');
-            $table->datetime('end_work')->comment('退勤');
-            $table->datetime('total_work')->comment('合計');
+            $table->datetime('end_work')->comment('退勤')->nullable();
+            $table->int('total_work')->comment('合計');
             $table->timestamps();
         });
     }

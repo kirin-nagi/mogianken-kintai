@@ -14,46 +14,40 @@ class Attendance extends Model
         'user_id',
         'start_work',
         'end_work',
+        'rest_time',
         'total_work',
     ];
 
+    protected $casts = [
+        'start_work' => 'datetime',
+        'end_work' => 'datetime',
+    ];
+
     // 休憩何回もできる
-    public function rests(): HasMany
+    public function rests()
     {
         return $this->hasMany(Rest::class);
     }
 
-    //休憩の合計を表示させる
-    public function getTotalRestTimeAttribute()
-    {
-        return $this->rests->sum(function ($rest){
-            if(!$rest->end_time) return 0;
-
-            return $rest->end_time->diffInMinutes($rest->start_time);
-        });
-    }
 
     // 当日の勤務
-    public static function todayForUser(): ?self{
-        return self::where('user_id', auth()->id())
+    public static function todayForUser(){
+
+        return self::where('user_id',auth()->id())
         ->whereDate('start_work', today())
         ->first();
     }
 
     // 退勤してるか
-    public function isFinished(): bool
+    public function isFinished()
     {
         return !is_null($this->end_work);
     }
 
     // 休憩中か
-    public function isOnRest(): bool
+    public function isOnRest()
     {
-        $latestRest = $this->Rests()
-        ->latest()
-        ->first();
-
-        return $latestRest && is_null($latestRest->rest_end);
+        return $this->rests()->whereNull('rest_end')->exists();
     }
 
 }

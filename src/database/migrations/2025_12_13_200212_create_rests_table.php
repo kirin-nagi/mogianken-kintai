@@ -17,9 +17,9 @@ class CreateRestsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('attendance_id')->constrained('attendances')->cascadeOnDelete();
-            $table->time('rest_start')->comment('休憩開始');
-            $table->time('rest_end')->comment('休憩終了');
-            $table->time('rest_time')->comment('合計');
+            $table->datetime('rest_start')->comment('休憩開始');
+            $table->datetime('rest_end')->comment('休憩終了')->nullable();
+            $table->int('rest_time')->comment('合計');
             $table->timestamps();
         });
     }

@@ -44,8 +44,12 @@ class AttendanceController extends Controller
             return redirect()->route('attendance.show');
         }
 
+        $workMinutest = now()->diffInMinutest($attendance->start_work);
+        $restMinutest = $attendance->rests->sum('rest_time');
+
         $attendance->update([
             'end_work' => now(),
+            'total_work' => $workMinutest - $restMinutest,
         ]);
 
         return redirect()->route('attendance.thanks');

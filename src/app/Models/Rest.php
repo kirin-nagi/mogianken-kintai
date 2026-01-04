@@ -16,4 +16,9 @@ class Stamp extends Model
         'rest_end',
         'rest_time',
     ];
+
+    protected $casts = [
+        'rest_start' => 'datetime',
+        'rest_end' => 'datetime',
+    ];
 }

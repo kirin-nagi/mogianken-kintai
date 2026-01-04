@@ -8,19 +8,13 @@ use App\Models\Rest;
 
 class RestController extends Controller
 {
-    public function start()
+    public function restStart()
     {
         // 休憩開始
         $attendance = Attendance::todayForUser();
 
         // 出勤してなくて、退勤済なら何もしない
-        if(!$attendance || $attendance->isFinished())
-        {
-            return redirect()->route('attendance.show');
-        }
-
-        // 休憩中
-        if($attendance->isOnRest())
+        if(!$attendance || $attendance->isFinished() || $attendance->isOnRest())
         {
             return redirect()->route('attendance.show');
         }
@@ -34,14 +28,28 @@ class RestController extends Controller
     }
 
     // 休憩終わり
-    public function end()
+    public function restEnd()
     {
         $attendance = Attendance::todayForUser();
 
-        if(!$attendance || $attendance->isFinished())
-        {
+        if(!$attendance) {
             return redirect()->route('attendance.show');
         }
+
+        $rest = $attendance->rests()->whereNull('rest_end')->latest()->first();
+
+        if(!$rest) {
+            return redirect()->route('attendance.show');
+        }
+
+        $minutes = now()->diffInMinutes($rest->rest_start);
+
+        $rest->update([
+            'rest_end' => now(),
+            'rest_time' =>$minutes,
+        ]);
+
+        return redirect()->route('attendance.show');
 
         // 最新の休憩
         $latestRest = $attendance->rests()->latest()->first();
