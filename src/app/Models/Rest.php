@@ -21,4 +21,11 @@ class Stamp extends Model
         'rest_start' => 'datetime',
         'rest_end' => 'datetime',
     ];
+
+    public function getRestTimeFormatteAttribute()
+    {
+        if(!$this->rest_time){
+            
+        }
+    }
 }
