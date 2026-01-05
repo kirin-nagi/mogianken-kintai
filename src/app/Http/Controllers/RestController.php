@@ -36,6 +36,7 @@ class RestController extends Controller
             return redirect()->route('attendance.show');
         }
 
+        // 最新の休憩
         $rest = $attendance->rests()->whereNull('rest_end')->latest()->first();
 
         if(!$rest) {
@@ -50,20 +51,5 @@ class RestController extends Controller
         ]);
 
         return redirect()->route('attendance.show');
-
-        // 最新の休憩
-        $latestRest = $attendance->rests()->latest()->first();
-
-        if(!$latestRest || $latestRest->rest_end)
-        {
-            return redirect()->route('attendance.show');
-        }
-
-        $latestRest->update([
-            'rest_end' => now(),
-        ]);
-
-        return redirect()->route('attendance.show');
     }
-
 }

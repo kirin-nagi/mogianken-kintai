@@ -22,10 +22,16 @@ class Stamp extends Model
         'rest_end' => 'datetime',
     ];
 
-    public function getRestTimeFormatteAttribute()
+    // 休憩合計を1:00で表示する
+    public function getRestTimeFormattedAttribute()
     {
         if(!$this->rest_time){
-            
+            return '0.00';
         }
+
+        $hours = floor($this->rest_time / 60);
+        $minutes = $this->rest_time % 60;
+
+        return sprintf('%d:%02d', $hours, $minutest);
     }
 }

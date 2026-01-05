@@ -50,4 +50,28 @@ class Attendance extends Model
         return $this->rests()->whereNull('rest_end')->exists();
     }
 
+    // 勤務一覧で休憩合計を1:00にする
+    public function getTotalRestFormattedAttribute()
+    {
+        $minutes = $this->rests->sum('rest_time');
+
+        $hours = floor($minutes / 60);
+        $minutes = $minutes % 60;
+
+        return sprintf('%d:%02d', $hours, $minutes);
+    }
+
+    // 勤務一覧で勤務合計を8:00にする
+    public function getTotalWorkFormattedAttribute()
+    {
+        if(!$this->total_work){
+            return '0:00';
+        }
+
+        $hours = floor($this->total_work / 60);
+        $minutes = $this->total_work % 60;
+
+        return sprintf('%d:%02d', $hours, $minutes);
+    }
+
 }

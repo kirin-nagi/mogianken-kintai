@@ -36,4 +36,4 @@ Route::post('/attendance/rest_end',[AttendanceController::class, 'restEnd'])->na
 Route::post('/attendance/thanks',[AttendanceController::class, 'thanks'])->name('attendance.thanks');
 
 
-Route::get('/attendance/list',[AttendanceController::class, 'showList'])->name('attendance.list');
+Route::get('/attendance/list',[AttendanceController::class, 'list'])->name('attendance.list');
