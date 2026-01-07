@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Rest;
+use App\Models\User;
 
 class Attendance extends Model
 {
@@ -14,7 +16,6 @@ class Attendance extends Model
         'user_id',
         'start_work',
         'end_work',
-        'rest_time',
         'total_work',
     ];
 

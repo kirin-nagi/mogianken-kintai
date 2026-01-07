@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Attendance;
+use App\Models\User;
 
-class Stamp extends Model
+class Rest extends Model
 {
     use HasFactory;
 
@@ -21,6 +23,11 @@ class Stamp extends Model
         'rest_start' => 'datetime',
         'rest_end' => 'datetime',
     ];
+
+    protected function attendance()
+    {
+        return $this->belongsTo(Attendance::class);
+    }
 
     // 休憩合計を1:00で表示する
     public function getRestTimeFormattedAttribute()

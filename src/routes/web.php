@@ -37,3 +37,4 @@ Route::post('/attendance/thanks',[AttendanceController::class, 'thanks'])->name(
 
 
 Route::get('/attendance/list',[AttendanceController::class, 'list'])->name('attendance.list');
+Route::get('/attendance/detail{id}',[AttendanceController::class, 'detail'])->name('attendance.detail');

@@ -9,11 +9,14 @@
 <div class="attendance-list__content">
     <div class="month-navigation">
         <a href="{{ route('attendance.list', ['month' => $prevMonth->format('Y-m')]) }}">
+            ← 前月
         </a>
         <span class="current-month">
             {{ $currentMonth->format('Y/m') }}
         </span>
-        <a></a>
+        <a href="{{ route('attendance.list', ['month' => $nextMonth->format('Y-m')]) }}">
+            翌月 →
+        </a>
     </div>
     <div class="attendance-list__heading">
         <p class="list-heading__item" >勤怠一覧</p>
@@ -27,13 +30,18 @@
             <th>合計</th>
             <th>詳細</th>
         </tr>
-        @foreach($attendances as $attendance)
+        @foreach($dates as $date)
+        @php
+        $attendance = $attendances[$date->format('Y-m-d')] ?? null;
+        @endphp
+
         <tr>
             <td>
                 <!-- 日付 -->
-                {{ $attendance->start_work->format('m/d') }}
-                ({{ [ '日','月','火','水','木','金','土',][$attendance->start_work->dayOfWeek]}})
+                {{ $date->format('m/d') }}
+                ({{ [ '日','月','火','水','木','金','土',][$date->dayOfWeek]}})
             </td>
+            @if($attendance)
             <td>
                 <!-- 出勤 -->
                 {{ $attendance->start_work->format('H:i') }}
@@ -53,6 +61,13 @@
             <td>
                 <a href="{{ route('attendance.detail', $attendance) }}">詳細</a>
             </td>
+            @else
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            @endif
         </tr>
         @endforeach
     </table>

@@ -20,6 +20,25 @@ class AttendanceController extends Controller
         $prevMonth = $currentMonth->copy()->subMonth();
         $nextMonth = $currentMonth->copy()->addMonth();
 
+        // 月の範囲
+        $start = $currentMonth->copy()->startOfMonth();
+        $end = $currentMonth->copy()->endOfMonth();
+
+        // 月の全日付
+        $dates = CarbonPeriod::create($start, $end);
+
+        // 勤怠取得
+        $attendances = Attendance::where('user_id', auth()->id())
+        ->whereBetween('start_work', [$start, $end])
+        ->get()
+        ->keyBy(fn ($a) => $a->start_work->format('Y-m-d'));
+
+        $dates = [];
+        for($date = $start->copy(); $date->lte($end); $date->addDay())
+        {
+            $dates[] = $date->copy();
+        }
+
         // ログインしてるユーザー
         $attendances = Attendance::where('user_id',auth()->id())
         ->whereBetween('start_work',[
@@ -29,7 +48,7 @@ class AttendanceController extends Controller
         ->orderBy('start_work')
         ->get();
 
-        return view('attendance.list', compact('attendances', 'currentMonth', 'prevMonth', 'nextMonth'));
+        return view('attendance.list', compact('attendances', 'currentMonth', 'prevMonth', 'nextMonth', 'date'));
     }
 
     // 勤怠打刻画面
@@ -75,5 +94,10 @@ class AttendanceController extends Controller
         ]);
 
         return redirect()->route('attendance.thanks');
+    }
+
+    public function detail()
+    {
+        return view('attendance.detail');
     }
 }

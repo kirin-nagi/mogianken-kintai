@@ -44,14 +44,13 @@ class AttendanceSeeder extends Seeder
                     'user_id' => $user->id,
                     'start_work' => $start,
                     'end_work' => $end,
-                    'rest_time' => $restMinutes,
                     'total_work' => $totalWork,
                 ]);
 
-                Rest::create([
-                    'attendance_id' => $attendance->id,
-                    'start_time' => $date->copy()->setTime(12, 0),
-                    'end_time' => $date->copy()->setTime(13, 0),
+                $attendance->rests()->create([
+                    'rest_start' => $date->copy()->setTime(12, 0),
+                    'rest_end' => $date->copy()->setTime(13, 0),
+                    'rest_time' => 60,
                 ]);
             }
         }
