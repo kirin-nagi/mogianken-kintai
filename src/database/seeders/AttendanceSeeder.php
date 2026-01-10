@@ -27,7 +27,7 @@ class AttendanceSeeder extends Seeder
         {
             for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay())
             {
-                if (rand(1, 10) <= 2)
+                if (rand(1, 7) <= 3)
                 {
                     continue;
                 }

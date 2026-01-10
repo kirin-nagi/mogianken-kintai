@@ -1,1 +1,84 @@
-/* 勤怠一覧 */
+/*勤怠一覧 */
+body {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #EEEEEE;
+}
+
+.list-heading__item {
+    position: relative;
+    padding-left: 14px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.list-heading__item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    width: 5px;
+    height: 1.5em;
+    background-color: #333;
+}
+
+.month-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    width: 900px;
+    height: 60px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    border-radius: 5px;
+
+}
+
+.prev-month {
+    text-decoration: none;
+    color: rgb(102, 101, 101)
+}
+
+.current-month {}
+
+.next-month {
+    text-decoration: none;
+    margin: right;
+    color: rgb(102, 101, 101);
+}
+
+.detail-item {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.empty-columns {
+    display: grid;
+    grid-template-columns: 90px 1fr 1fr 1fr 1fr 60px;
+    align-items: center;
+    padding: 8px 4px;
+    background-color: white;
+    color: rgb(102, 101, 101);
+    border-bottom: 3px solid #EEEEEE;
+    width: 900px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+.empty-columns span {
+    padding: 0 6px;
+    white-space: nowrap;
+    font-size: 14px;
+    background-color: white;
+}
+
+table tr:first-child .empty-row{
+    border-top: 1px solid #333;
+}

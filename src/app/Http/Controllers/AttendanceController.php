@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\Auth;
 
 
 class AttendanceController extends Controller
@@ -21,34 +23,28 @@ class AttendanceController extends Controller
         $nextMonth = $currentMonth->copy()->addMonth();
 
         // 月の範囲
-        $start = $currentMonth->copy()->startOfMonth();
-        $end = $currentMonth->copy()->endOfMonth();
+        $startOfMonth = $currentMonth->copy()->startOfMonth();
+        $endOfMonth = $currentMonth->copy()->endOfMonth();
 
         // 月の全日付
-        $dates = CarbonPeriod::create($start, $end);
+        $dates = CarbonPeriod::create($startOfMonth, $endOfMonth);
 
         // 勤怠取得
         $attendances = Attendance::where('user_id', auth()->id())
-        ->whereBetween('start_work', [$start, $end])
+        ->whereBetween('start_work', [$startOfMonth, $endOfMonth])
+        ->with('rests')
         ->get()
         ->keyBy(fn ($a) => $a->start_work->format('Y-m-d'));
 
         $dates = [];
-        for($date = $start->copy(); $date->lte($end); $date->addDay())
+        for($date = $startOfMonth->copy(); $date->lte($endOfMonth); $date->addDay())
         {
             $dates[] = $date->copy();
         }
 
-        // ログインしてるユーザー
-        $attendances = Attendance::where('user_id',auth()->id())
-        ->whereBetween('start_work',[
-            $currentMonth->copy()->startOfMonth(),
-            $currentMonth->copy()->endOfMonth(),
-        ])
-        ->orderBy('start_work')
-        ->get();
+        $user = Auth::user();
 
-        return view('attendance.list', compact('attendances', 'currentMonth', 'prevMonth', 'nextMonth', 'date'));
+        return view('attendance.list', compact('attendances', 'currentMonth', 'prevMonth', 'nextMonth', 'dates', 'user'));
     }
 
     // 勤怠打刻画面
@@ -96,8 +92,12 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.thanks');
     }
 
-    public function detail()
+    public function detail($date)
     {
-        return view('attendance.detail');
+        $attendance = Attendance::whereDate('work_date', $date)
+        ->where('user_id', auth()->id())
+        ->first();
+
+        return view('attendance.detail', compact('date', 'attendance'));
     }
 }
