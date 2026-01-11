@@ -67,15 +67,19 @@ table {
     background-color: white;
     color: rgb(102, 101, 101);
     border-bottom: 3px solid #EEEEEE;
-    height: 60px;
+    height: 40px;
     border-radius: 5px;
+    justify-items: center;
 }
 
 .empty-columns span {
-    padding: 0 6px;
+    padding: 0px 6px;
     white-space: nowrap;
     font-size: 14px;
     background-color: white;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.15em;
 }
 
 table tr:first-child .empty-row {
