@@ -1,0 +1,10 @@
+/* 勤怠詳細画面 */
+body{
+    background-color: #EEEEEE;
+}
+
+.detail__content{
+    max-width: 900px;
+    max-height: 555px;
+    margin: 0 auto;
+}

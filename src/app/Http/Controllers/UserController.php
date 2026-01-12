@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use App\Models\Rest;
+use App\Models\Attendance;
 
 class UserController extends Controller
 {

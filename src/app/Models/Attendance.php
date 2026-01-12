@@ -24,6 +24,11 @@ class Attendance extends Model
         'end_work' => 'datetime',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     // 休憩何回もできる
     public function rests()
     {

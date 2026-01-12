@@ -1,7 +1,8 @@
+<!-- 勤怠一覧 -->
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="/css/list.css">
+<link rel="stylesheet" href="{{ asset('css/attendance.css') }}">
 @endsection
 
 @section('content')
@@ -73,7 +74,7 @@
                     <span></span>
                     <span></span>
                     <span>
-                        <a href="{{ route('attendance.detail', $date->format('Y-m-d')) }}" class="detail-item">詳細</a>
+                        <a href="{{ route('attendance.detail', $date->format('Y-m-d')) }}" class="detail-item__holiday">詳細</a>
                     </span>
                     @endif
                 </div>

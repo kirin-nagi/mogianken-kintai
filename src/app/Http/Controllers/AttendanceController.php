@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Attendance;
+use App\Models\User;
+use App\Models\Rest;
+use App\Http\Requests\DetailRequest;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Auth;
+
 
 
 class AttendanceController extends Controller
@@ -92,12 +96,20 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.thanks');
     }
 
-    public function detail($date)
+    // 仮 勤怠申請画面
+    public function detailStore(DetailRequest $request, $id)
     {
-        $attendance = Attendance::whereDate('work_date', $date)
-        ->where('user_id', auth()->id())
-        ->first();
+        $attendance = Attendance::findOrFail($id);
 
-        return view('attendance.detail', compact('date', 'attendance'));
+        return redirect()->route('attendance.detail', $id);
+    }
+
+    public function showDetail($id)
+    {
+        $user = Auth::user();
+
+        $attendance = Attendance::findOrFail($id);
+
+    return view('attendance.detail', compact('attendance', 'user'));
     }
 }

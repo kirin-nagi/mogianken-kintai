@@ -34,7 +34,6 @@ Route::post('/attendance/end',[AttendanceController::class, 'end'])->name('atten
 Route::post('/attendance/rest_start',[AttendanceController::class, 'restStart'])->name('attendance.rest_start');
 Route::post('/attendance/rest_end',[AttendanceController::class, 'restEnd'])->name('attendance.rest_end');
 Route::post('/attendance/thanks',[AttendanceController::class, 'thanks'])->name('attendance.thanks');
-
-
 Route::get('/attendance/list',[AttendanceController::class, 'list'])->name('attendance.list');
-Route::get('/attendance/detail{id}',[AttendanceController::class, 'detail'])->name('attendance.detail');
+Route::get('attendance/detail/{id}', [AttendanceController::class, 'showDetail'])->name('attendance.showDetail');
+Route::post('attendance/detail/{id}', [AttendanceController::class, 'detailStore'])->name('attendance.detail');
