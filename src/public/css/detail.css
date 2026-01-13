@@ -1,10 +1,38 @@
 /* 勤怠詳細画面 */
-body{
+body {
     background-color: #EEEEEE;
 }
 
-.detail__content{
+.detail__content {
+    margin: 0 auto;
+}
+
+.detail__heading-item {
+    position: relative;
+    padding-left: 14px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.detail__heading-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    width: 5px;
+    height: 1.5em;
+    background-color: #333;
+}
+
+.form__group {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.form__group-content {
     max-width: 900px;
     max-height: 555px;
     margin: 0 auto;
+    background-color: white;
 }
