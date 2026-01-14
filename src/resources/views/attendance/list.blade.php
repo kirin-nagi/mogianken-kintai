@@ -74,7 +74,7 @@
                     <span></span>
                     <span></span>
                     <span>
-                        <a href="{{ route('attendance.detail', $attendance->id) }}" class="detail-item__holiday">詳細</a>
+                        <a href="{{ route('attendance.detail', $date->format('Y-m-d')) }}" class="detail-item__holiday">詳細</a>
                     </span>
                     @endif
                 </div>

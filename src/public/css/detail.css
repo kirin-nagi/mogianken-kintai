@@ -1,9 +1,11 @@
 /* 勤怠詳細画面 */
 body {
     background-color: #EEEEEE;
+    margin: 0 auto;
 }
 
-.detail__content {
+.detail-form__content {
+    max-width: 900px;
     margin: 0 auto;
 }
 
@@ -25,6 +27,9 @@ body {
 }
 
 .form__group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
     max-width: 900px;
     margin: 0 auto;
     background-color: white;
@@ -33,6 +38,33 @@ body {
 .form__group-content {
     max-width: 900px;
     max-height: 555px;
+
     margin: 0 auto;
     background-color: white;
+}
+
+.form__input--textarea textarea {
+    width: 316px;
+    height: 72px;
+}
+
+.form__error {
+    height: 20px;
+    color: #ff0000;
+    text-align: left;
+}
+
+.form__button {
+    margin-top: 30px;
+}
+
+.form__button-submit {
+    padding: 10px;
+    width: 30%;
+    height: 50px;
+    border: none;
+    border-radius: 3px;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
 }

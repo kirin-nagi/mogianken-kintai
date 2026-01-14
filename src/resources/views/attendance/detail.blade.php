@@ -7,11 +7,11 @@
 
 
 @section('content')
-<div class="detail__content">
+<div class="detail-form__content">
     <div class="detail__heading">
         <p class="detail__heading-item">勤怠詳細</p>
     </div>
-    <form action="{{ route('attendance.detail', $attendance->id) }}" method="post">
+    <form action="{{ route('attendance.detail', $attendance->id) }}" method="post" class="form">
         @csrf
         <div class="form__group">
             <div class="form__group--title">
@@ -38,7 +38,7 @@
                     <input type="time" name="work-time" />
                     <input type="time" name="work-time" />
                 </div>
-                <div class="detail__error">
+                <div class="form__error">
                     @error('work-time')
                     {{ $message }}
                     @enderror
@@ -54,7 +54,7 @@
                     <input type="time" name="rest-time" />
                     <input type="time" name="rest-time" />
                 </div>
-                <div class="detail__error">
+                <div class="form__error">
                     @error('rest-time')
                     {{ $message }}
                     @enderror
@@ -81,7 +81,7 @@
                 <div class="form__input--textarea">
                     <textarea name="description"></textarea>
                 </div>
-                <div class="detail__error">
+                <div class="form__error">
                     @error('description')
                     {{ $message }}
                     @enderror
