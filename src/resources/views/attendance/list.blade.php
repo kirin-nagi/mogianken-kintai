@@ -73,9 +73,7 @@
                     <span></span>
                     <span></span>
                     <span></span>
-                    <span>
-                        <a href="{{ route('attendance.detail', $date->format('Y-m-d')) }}" class="detail-item__holiday">詳細</a>
-                    </span>
+                    <span class="detail-holiday">詳細</span>
                     @endif
                 </div>
             </td>

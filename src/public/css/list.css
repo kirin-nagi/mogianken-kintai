@@ -87,8 +87,7 @@ table tr:first-child .empty-row {
     border-top: 1px solid #EEEEEE;
 }
 
-.detail-item__holiday{
-    text-decoration: none;
+.detail-holiday{
     color: black;
     font-weight: bold;
 }

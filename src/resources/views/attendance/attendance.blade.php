@@ -23,7 +23,7 @@
         <div id="date" class="date"></div>
         <div id="time" class="time"></div>
     </div>
-    <p class="end-time">お疲れさまでした。</p>
+    <p class="end-time">お疲れ様でした。</p>
     @elseif($attendance->isOnRest())
     <p class="attendance-item">休憩中</p>
     <div class="clock">

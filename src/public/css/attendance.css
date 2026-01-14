@@ -49,3 +49,9 @@
     font-size: 20px;
     cursor: pointer;
 }
+
+.end-time{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}

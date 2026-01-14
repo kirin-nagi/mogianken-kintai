@@ -55,16 +55,23 @@ body {
 }
 
 .form__button {
+    margin: 0 auto;
     margin-top: 30px;
+    max-width: 900px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .form__button-submit {
+    display: block;
+    margin-left: auto;
     padding: 10px;
-    width: 30%;
+    width: 130px;
     height: 50px;
     border: none;
     border-radius: 3px;
     background: #000;
     color: #fff;
     cursor: pointer;
+    font-size: 18px;
 }
