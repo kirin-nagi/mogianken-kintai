@@ -10,7 +10,7 @@
     <div class="login-form__heading">
         <h2>管理者ログイン</h2>
     </div>
-    <form action="{{ route('login') }}" method="post">
+    <form action="{{ route('admin.login') }}" method="post">
         @csrf
         <div class="form__group">
             <div class="form__group-title">
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="form__button">
-            <button class="form__button-submit" type="submit">ログインする</button>
+            <button class="form__button-submit" type="submit">管理者ログインする</button>
         </div>
     </form>
 </div>

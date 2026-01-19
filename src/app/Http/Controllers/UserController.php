@@ -47,11 +47,6 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
-    public function showAdminLogin()
-    {
-        return view('auth.admin_login');
-    }
-
     public function logout()
     {
         return view('auth.login');

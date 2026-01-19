@@ -112,4 +112,6 @@ class AttendanceController extends Controller
 
     return view('attendance.detail', compact('attendance', 'user'));
     }
+
+
 }

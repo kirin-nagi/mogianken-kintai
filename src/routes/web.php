@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController;
+use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\RestController;
 
 /*
@@ -21,7 +23,7 @@ Route::get('/register',[UserController::class, 'register']);
 Route::post('/register',[UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/login', [UserController::class,'showLogin'])->name('login');
-Route::get('/admin/login', [UserController::class, 'showAdminLogin']);
+Route::get('/admin/login', [AdminLoginController::class, 'showAdminLogin'])->name('admin.login');
 
 Route::middleware('auth')->group(function(){
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -37,3 +39,6 @@ Route::post('/attendance/thanks',[AttendanceController::class, 'thanks'])->name(
 Route::get('/attendance/list',[AttendanceController::class, 'list'])->name('attendance.list');
 Route::get('attendance/detail/{id}', [AttendanceController::class, 'showDetail'])->name('attendance.showDetail');
 Route::post('attendance/detail/{id}', [AttendanceController::class, 'detailStore'])->name('attendance.detail');
+Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function(){
+    Route::get('/attendance/today',[AdminAttendanceController::class, 'today'])->name('admin.list.today');
+});
