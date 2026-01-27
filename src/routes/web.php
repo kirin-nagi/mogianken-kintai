@@ -23,7 +23,8 @@ Route::get('/register',[UserController::class, 'register']);
 Route::post('/register',[UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/login', [UserController::class,'showLogin'])->name('login');
-Route::get('/admin/login', [AdminLoginController::class, 'showAdminLogin'])->name('admin.login');
+Route::get('/admin/login', [AdminLoginController::class, 'showAdminLogin'])->name('admin.showLogin');
+Route::post('/admin/login', [AdminLoginController::class, 'AdminLogin'])->name('admin.login');
 
 Route::middleware('auth')->group(function(){
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -40,5 +41,5 @@ Route::get('/attendance/list',[AttendanceController::class, 'list'])->name('atte
 Route::get('attendance/detail/{id}', [AttendanceController::class, 'showDetail'])->name('attendance.showDetail');
 Route::post('attendance/detail/{id}', [AttendanceController::class, 'detailStore'])->name('attendance.detail');
 Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function(){
-    Route::get('/attendance/today',[AdminAttendanceController::class, 'today'])->name('admin.list.today');
+    Route::get('/attendance/list',[AdminLoginController::class, 'today'])->name('admin.list');
 });

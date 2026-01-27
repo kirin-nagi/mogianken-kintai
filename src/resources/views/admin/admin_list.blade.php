@@ -11,13 +11,13 @@
         <div id="date" class="date">の勤務</div>
     </div>
     <div class="month-navigation">
-        <a href="{{ route('attendance.list', ['month' => $prevMonth->format('Y-m')]) }}" class="prev-month">
+        <a href="{{ route('admin.list', ['month' => $prevMonth->format('Y-m')]) }}" class="prev-month">
             ← 前月
         </a>
         <span class="current-month">
             📅  {{ $currentMonth->format('Y/m') }}
         </span>
-        <a href="{{ route('attendance.list', ['month' => $nextMonth->format('Y-m')]) }}" class="next-month">
+        <a href="{{ route('admin.list', ['month' => $nextMonth->format('Y-m')]) }}" class="next-month">
             翌月 →
         </a>
     </div>
