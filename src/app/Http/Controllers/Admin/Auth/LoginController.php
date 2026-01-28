@@ -18,16 +18,12 @@ class LoginController extends Controller
 
     public function AdminLogin(LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
-
-        if(Auth::attempt([
-            'email' => $credentials['email'],
-            'password' => $credentials['password'],
-            'role' => 1,
-        ])){
-            $request->session()->regenerate();
-            return redirect()->route('admin.list');
+        if(! Auth::attempt($request->only('email', 'password'))){
+            return back();
         }
-        return back();
+
+        $request->session()->regenerate();
+
+        return redirect()->route('admin.list');
     }
 }

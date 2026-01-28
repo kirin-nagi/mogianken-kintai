@@ -70,7 +70,7 @@ class Attendance extends Model
     // 勤務一覧で勤務合計を8:00にする
     public function getTotalWorkFormattedAttribute()
     {
-        if(!$this->total_work){
+        if(!$this->total_work === null){
             return '0:00';
         }
 
@@ -78,6 +78,15 @@ class Attendance extends Model
         $minutes = $this->total_work % 60;
 
         return sprintf('%d:%02d', $hours, $minutes);
+    }
+
+    public function getTotalWorkSecondsAttribute()
+    {
+        if (!$this->end_work){
+            return 0;
+        }
+
+        return $this->end_work->diffInSeconds($this->start_work) - ($this->rests->sum('rest_time') * 60);
     }
 
 }

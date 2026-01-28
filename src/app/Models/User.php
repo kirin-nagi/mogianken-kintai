@@ -51,4 +51,9 @@ class User extends Authenticatable
         return $this->belongsTo(attendance::class);
     }
 
+    public function isAdmin()
+    {
+        return (int)$this->role === 1;
+    }
+
 }

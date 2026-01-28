@@ -32,13 +32,13 @@ class Rest extends Model
     // 休憩合計を1:00で表示する
     public function getRestTimeFormattedAttribute()
     {
-        if(!$this->rest_time){
+        if(!$this->rest_time ===null){
             return '0.00';
         }
 
         $hours = floor($this->rest_time / 60);
         $minutes = $this->rest_time % 60;
 
-        return sprintf('%d:%02d', $hours, $minutest);
+        return sprintf('%d:%02d', $hours, $minutes);
     }
 }

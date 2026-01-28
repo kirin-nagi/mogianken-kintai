@@ -2,23 +2,23 @@
 @extends('layouts.admin_app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/admin_common.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/list.css') }}">
 @endsection
 
 @section('content')
 <div class="admin-list__content">
     <div class="admin-list__heading">
-        <div id="date" class="date">の勤務</div>
+        <div id="date" class="date">{{ $currentDay->format('Y年m月d日') }}の勤務</div>
     </div>
-    <div class="month-navigation">
-        <a href="{{ route('admin.list', ['month' => $prevMonth->format('Y-m')]) }}" class="prev-month">
-            ← 前月
+    <div class="day-navigation">
+        <a href="{{ route('admin.list', ['day' => $prevDay->format('Y-m-d')]) }}" class="prev-day">
+            ← 前日
         </a>
-        <span class="current-month">
-            📅  {{ $currentMonth->format('Y/m') }}
+        <span class="current-day">
+            📅  {{ $currentDay->format('Y-m-d')}}
         </span>
-        <a href="{{ route('admin.list', ['month' => $nextMonth->format('Y-m')]) }}" class="next-month">
-            翌月 →
+        <a href="{{ route('admin.list', ['day' => $nextDay->format('Y-m-d')]) }}" class="next-day">
+            翌日 →
         </a>
     </div>
     <table>
@@ -35,37 +35,46 @@
             </td>
         </tr>
 
-        @foreach($dates as $date)
+        @foreach($attendances as $userAttendances)
         @php
-        $attendance = $attendances[$date->format('Y-m-d')] ?? null;
+        $first = $userAttendances->sortBy('start_work')->first();
+
+        $last = $userAttendances->whereNotNull('end_work')->sortByDesc('end_work')->first();
+
+        $totalRestMinutes = $userAttendances->flatMap->rests->sum('rest_time');
+
+        $totalWorkSeconds = $userAttendances->sum('total_work_seconds');
+
+        $startTime = $first->start_work->format('H:i');
+        $endTime = $last?->end_work?->format('H:i') ?? '-';
+        $restTime = $totalRestMinutes ? gmdate('H:i', $totalRestMinutes * 60) : '0:00';
+        $workTime = gmdate('H:i', $totalWorkSeconds);
         @endphp
         <tr>
             <td colspan="6" class="empty-row">
                 <div class="empty-columns">
                     <span>
                     <!-- 名前にしたい -->
-                    {{ $date->format('m/d') }}
-                    ({{ [ '日','月','火','水','木','金','土',][$date->dayOfWeek]}})
+                    {{ $first->user->name }}
                     </span>
-                    @if($attendance)
                     <span>
                     <!-- 出勤 -->
-                    {{ $attendance->start_work->format('H:i') }}
+                    {{ $startTime }}
                     </span>
                     <span>
                     <!-- 退勤 -->
-                    {{ $attendance->end_work?->format('H:i') ?? '-' }}
+                    {{ $endTime }}
                     </span>
                     <span>
                     <!-- 休憩合計 -->
-                    {{ $attendance->rests->sum('rest_time') ? $attendance->total_rest_formatted : '0:00' }}
+                    {{ $restTime }}
                     </span>
                     <span>
                     <!-- 勤務合計 -->
-                    {{ $attendance->total_work_formatted }}
+                    {{ $workTime }}
                     </span>
                     <span>
-                        <a href="{{ route('attendance.detail', $attendance->id) }}" class="detail-item">詳細</a>
+                        <a href="{{ route('attendance.adminShowDetail', $first->id) }}" class="detail-item">詳細</a>
                     </span>
                 </div>
             </td>

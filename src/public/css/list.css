@@ -42,8 +42,6 @@ body {
     color: rgb(102, 101, 101)
 }
 
-.current-month {}
-
 .next-month {
     text-decoration: none;
     color: rgb(102, 101, 101);
