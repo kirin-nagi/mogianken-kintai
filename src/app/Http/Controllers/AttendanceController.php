@@ -96,7 +96,7 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.thanks');
     }
 
-    // 仮 勤怠申請画面
+    // 仮 勤怠詳細画面
     public function detailStore(DetailRequest $request, $id)
     {
         $attendance = Attendance::findOrFail($id);

@@ -46,4 +46,6 @@ Route::get('/attendance/detail/{id}', [AttendanceController::class, 'showDetail'
 Route::post('/attendance/detail/{id}', [AttendanceController::class, 'detailStore'])->name('attendance.detail');
 Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'showAdminDetail'])->name('attendance.adminShowDetail');
 Route::post('/admin/attendance/{id}', [AdminAttendanceController::class, 'adminDetailStore'])->name('attendance.adminDetail');
+Route::get('/admin/staff/list', [AdminAttendanceController::class, 'showAdminStaff'])->name('admin.staffList');
+Route::get('/admin/attendance/staff/{id}', [AdminAttendanceController::class, 'showAdminList'])->name('admin.attendanceList');
 

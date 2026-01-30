@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,6 +39,7 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.adminDetail', $id);
     }
 
+    // 勤怠詳細画面
     public function showAdminDetail($id)
     {
         $user = Auth::user();
@@ -47,5 +49,18 @@ class AttendanceController extends Controller
     return view('admin.admin_detail', compact('attendance', 'user'));
     }
 
+    // スタッフ一覧画面
+    public function showAdminStaff()
+    {
+        $users = User::where('role', 0)->get();
+
+    return view('admin.admin_staff', compact('users'));
+    }
+
+    // スタッフ別勤怠一覧
+    public function showAdminList()
+    {
+        return view('admin.admin_staff_each');
+    }
 
 }
