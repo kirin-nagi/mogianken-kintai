@@ -31,7 +31,7 @@ table {
 
 .empty-columns {
     display: grid;
-    grid-template-columns: 90px 1fr 1fr 1fr 1fr 60px;
+    grid-template-columns:1fr 1fr 1fr;
     align-items: center;
     padding: 8px 4px;
     background-color: white;

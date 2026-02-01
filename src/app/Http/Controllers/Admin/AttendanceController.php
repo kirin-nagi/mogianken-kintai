@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\User;
+use App\Models\Rest;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
@@ -31,7 +33,7 @@ class AttendanceController extends Controller
         return view('admin.admin_list', compact('attendances', 'currentDay', 'prevDay','nextDay'));
     }
 
-    // 仮 勤怠申請画面
+    // 仮 勤怠詳細画面
     public function adminDetailStore(DetailRequest $request, $id)
     {
         $attendance = Attendance::findOrFail($id);
@@ -58,9 +60,38 @@ class AttendanceController extends Controller
     }
 
     // スタッフ別勤怠一覧
-    public function showAdminList()
+    public function showAdminList(Request $request, $id)
     {
-        return view('admin.admin_staff_each');
+        // 見たい月表示
+        $currentMonth = $request->month ? Carbon::createFromFormat('Y-m', $request->month) : now()->startOfMonth();
+
+        // 前月・翌月
+        $prevMonth = $currentMonth->copy()->subMonth();
+        $nextMonth = $currentMonth->copy()->addMonth();
+
+        // 月の範囲
+        $startOfMonth = $currentMonth->copy()->startOfMonth();
+        $endOfMonth = $currentMonth->copy()->endOfMonth();
+
+        // 月の全日付
+        $dates = CarbonPeriod::create($startOfMonth, $endOfMonth);
+
+        // 勤怠取得
+        $attendances = Attendance::where('user_id', $id)
+        ->whereBetween('start_work', [$startOfMonth, $endOfMonth])
+        ->with('rests')
+        ->get()
+        ->groupBy(fn ($a) => $a->start_work->format('Y-m-d'));
+
+        $dates = [];
+        for($date = $startOfMonth->copy(); $date->lte($endOfMonth); $date->addDay())
+        {
+            $dates[] = $date->copy();
+        }
+
+        $user = User::findOrFail($id);
+
+    return view('admin.admin_staff_each',compact('attendances', 'currentMonth', 'prevMonth', 'nextMonth', 'dates', 'user', 'dates'));
     }
 
 }
