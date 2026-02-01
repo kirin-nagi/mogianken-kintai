@@ -83,8 +83,3 @@ table {
 table tr:first-child .empty-row {
     border-top: 1px solid #EEEEEE;
 }
-
-.detail-holiday {
-    color: black;
-    font-weight: bold;
-}

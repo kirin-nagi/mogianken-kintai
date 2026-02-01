@@ -55,3 +55,9 @@ table {
 table tr:first-child .empty-row {
     border-top: 1px solid #EEEEEE;
 }
+
+.detail-item {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}

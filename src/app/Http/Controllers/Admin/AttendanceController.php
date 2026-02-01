@@ -91,7 +91,7 @@ class AttendanceController extends Controller
 
         $user = User::findOrFail($id);
 
-    return view('admin.admin_staff_each',compact('attendances', 'currentMonth', 'prevMonth', 'nextMonth', 'dates', 'user', 'dates'));
+    return view('admin.admin_staff_list',compact('attendances', 'currentMonth', 'prevMonth', 'nextMonth', 'dates', 'user', 'dates'));
     }
 
 }
