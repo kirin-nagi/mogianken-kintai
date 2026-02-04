@@ -7,6 +7,8 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\RestController;
+use App\Http\Controllers\Admin\StampController as AdminStampController;
+use App\Http\Controllers\StampController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,4 +50,6 @@ Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'showAdm
 Route::post('/admin/attendance/{id}', [AdminAttendanceController::class, 'adminDetailStore'])->name('attendance.adminDetail');
 Route::get('/admin/staff/list', [AdminAttendanceController::class, 'showAdminStaff'])->name('admin.staffList');
 Route::get('/admin/attendance/staff/{id}', [AdminAttendanceController::class, 'showAdminList'])->name('admin.attendanceList');
-
+// middlewareで管理者と一般区別する（url一緒だから）
+Route::get('/admin/stamp_correction_request/list',[AdminStampController::class, 'showAdminStamp'])->name('admin.stampList');
+Route::get('/stamp_correction_request/list',[StampController::class, 'showStamp'])->name('stampList');

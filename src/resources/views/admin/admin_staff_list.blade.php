@@ -33,7 +33,7 @@
                     <span>詳細</span>
                 </div>
             </td>
-        </tr>
+</tr>
 
         @foreach($dates as $date)
         @php

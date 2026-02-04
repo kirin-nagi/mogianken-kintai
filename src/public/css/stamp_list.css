@@ -1,0 +1,88 @@
+body {
+    background-color: #EEEEEE;
+}
+
+.stamp-list__inner {
+    width: 100%;
+    text-align: center;
+
+}
+
+.stamp-list__row {
+    border-bottom: 1px solid black;
+}
+
+.stamp-list__header {
+    padding: 12px;
+    width: 40%;
+    margin-right: 50px;
+    font-weight: bold;
+}
+
+.stamp-list__link {
+    text-decoration: none;
+    gap: 30px;
+    color: black;
+    margin-right: 50px;
+    font-weight: bold;
+}
+
+.stamp-list__content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.stamp-list__heading-item {
+    position: relative;
+    padding-left: 14px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.stamp-list__heading-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    width: 5px;
+    height: 1.5em;
+    background-color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.empty-columns {
+    display: grid;
+    grid-template-columns: 90px 1fr 1fr 1fr 1fr 60px;
+    align-items: center;
+    padding: 8px 4px;
+    background-color: white;
+    color: rgb(102, 101, 101);
+    border-bottom: 3px solid #EEEEEE;
+    height: 40px;
+    border-radius: 5px;
+    justify-items: center;
+}
+
+.empty-columns span {
+    padding: 0px 6px;
+    white-space: nowrap;
+    font-size: 14px;
+    background-color: white;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.15em;
+}
+
+table tr:first-child .empty-row {
+    border-top: 1px solid #EEEEEE;
+}
+
+.detail-item {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}

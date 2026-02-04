@@ -1,5 +1,4 @@
-<!-- 申請一覧（一般と管理。if文？）認証ミドルウェアで区別-->
-@extends('layouts.app')
+@extends('layouts.admin_app')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/stamp_list.css') }}">
