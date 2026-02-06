@@ -1,5 +1,5 @@
 <!-- 勤怠詳細（管理者） -->
-@extends('layouts.admin_app')
+@extends('layouts.app')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/admin/detail.css') }}">

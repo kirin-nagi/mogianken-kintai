@@ -1,4 +1,4 @@
-@extends('layouts.admin_app')
+@extends('layouts.app')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/stamp_list.css') }}">
