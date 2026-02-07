@@ -31,7 +31,8 @@
             </td>
         </tr>
         @foreach($approvals as $approval)
-        <td colspan="6" class="empty-row">
+        <tr>
+            <td colspan="6" class="empty-row">
                 <div class="empty-columns">
                     <span>承認待ち</span>
                     <span>{{ $approval->user->name }}</span>
