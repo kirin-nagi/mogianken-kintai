@@ -30,19 +30,21 @@
                 </div>
             </td>
         </tr>
-        <!-- foreach -->
+        @foreach($approvals as $approval)
         <td colspan="6" class="empty-row">
                 <div class="empty-columns">
-                    <span>status</span>
-                    <span>user</span>
-                    <span>targetdate</span>
-                    <span>reason</span>
-                    <span>申請日時</span>
+                    <span>承認待ち</span>
+                    <span>{{ $approval->user->name }}</span>
+                    <span>{{ $approval->targetdate->format('Y-m-d') }}</span>
+                    <span>{{ $approval->reason }}</span>
+                    <span>{{ $approval->created_at->format('Y-m-d') }}</span>
                     <span>
                         <a href="" class="detail-item">詳細</a>
                     </span>
                 </div>
             </td>
+        </tr>
+        @endforeach
     </table>
 </div>
 @endsection

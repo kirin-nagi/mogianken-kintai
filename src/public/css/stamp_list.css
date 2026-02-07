@@ -2,34 +2,16 @@ body {
     background-color: #EEEEEE;
 }
 
-.stamp-list__inner {
-    width: 100%;
-    text-align: center;
-
+.stamp-list__content {
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.stamp-list__row {
-    border-bottom: 1px solid black;
-}
-
-.stamp-list__header {
+.stamp-list__heading {
     padding: 12px;
     width: 40%;
     margin-right: 50px;
     font-weight: bold;
-}
-
-.stamp-list__link {
-    text-decoration: none;
-    gap: 30px;
-    color: black;
-    margin-right: 50px;
-    font-weight: bold;
-}
-
-.stamp-list__content {
-    max-width: 900px;
-    margin: 0 auto;
 }
 
 .stamp-list__heading-item {
@@ -49,7 +31,27 @@ body {
     background-color: #333;
 }
 
+.stamp-list__inner {
+    width: 100%;
+    text-align: center;
+
+}
+
+.stamp-list__row {
+    border-bottom: 1px solid black;
+}
+
+.stamp-list__link {
+    text-decoration: none;
+    gap: 30px;
+    color: black;
+    margin-right: 50px;
+    font-weight: bold;
+}
+
 table {
+    max-width: 900px;
+    margin: 0 auto;
     width: 100%;
     border-collapse: collapse;
 }
