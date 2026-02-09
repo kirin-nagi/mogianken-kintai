@@ -39,8 +39,9 @@
                     <span>{{ $approval->targetdate->format('Y-m-d') }}</span>
                     <span>{{ $approval->reason }}</span>
                     <span>{{ $approval->created_at->format('Y-m-d') }}</span>
+                    <!-- 管理者は修正画面、一般は勤怠承認待ち画面に飛ぶようにする -->
                     <span>
-                        <a href="" class="detail-item">詳細</a>
+                        <a href="{{ route('stampCorrection', $approval->id) }}" class="detail-item">詳細</a>
                     </span>
                 </div>
             </td>

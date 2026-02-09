@@ -32,8 +32,14 @@ class StampController extends Controller
         return view('stamp.stamp_list', compact('approvals'));
     }
 
-    public function showCorrection()
+    public function showCorrection($id)
     {
-        return view('stamp.stamp_correction');
+        $user = Auth::user();
+
+        $approval = Approval::findOrFail($id);
+
+        $detail = Detail::findOrFail($id);
+
+        return view('stamp.stamp_correction', compact('user', 'approval', 'detail'));
     }
 }
