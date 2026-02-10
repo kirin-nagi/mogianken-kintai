@@ -16,7 +16,6 @@ class CreateApprovalsTable extends Migration
         Schema::create('approvals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('request_id')->constrained('requests')->cascadeOnDelete();
             $table->string('reason')->comment('申請理由');
             $table->tinyInteger('status')->default(0)->comment('0:承認待ち 1:承認済み');
             $table->datetime('targetdate')->comment('対象日時');

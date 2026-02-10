@@ -29,8 +29,20 @@ class RequestsSeeder extends Seeder
 
                 foreach ($dates as $date)
                     {
-                        DB::table('requests')->insert([
+                        $status = rand(0,1);
+
+                $approvalId = DB::table('approvals')->insertGetId([
+                            'user_id' =>$userId,
+                            'targetdate' =>$date,
+                            'reason' => '遅延のため',
+                            'status' => $status,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]);
+
+                DB::table('requests')->insert([
                             'user_id' => $userId,
+                            'approval_id' => $approvalId,
                             'work_date' => $date,
                             'start_work' => Carbon::parse("$date 09:00:00"),
                             'end_work' => Carbon::parse("$date 18:00:00"),

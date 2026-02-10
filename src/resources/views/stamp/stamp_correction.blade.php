@@ -53,7 +53,7 @@
         </table>
     </div>
     <div class="form__button">
-        @if($approval->status === '承認待ち')
+        @if($approval->status === 0)
         <form action="{{ route('stampCorrection', $approval->id) }}" method="post">
             @csrf
             <button class="form__button-submit" type="submit">承認</button>

@@ -20,7 +20,6 @@ class ApprovalsSeeder extends Seeder
         foreach($requests as $request){
             DB::table('approvals')->insert([
                 'user_id' => $request->user_id,
-                'request_id' =>$request->id,
                 'reason' => $request->reason,
                 'status' => rand(0, 1),
                 'targetdate' => $request->work_date,

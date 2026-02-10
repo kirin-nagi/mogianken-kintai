@@ -31,6 +31,9 @@
             </td>
         </tr>
         @foreach($approvals as $approval)
+        @php
+        $loginUser = Auth::user();
+        @endphp
         <tr>
             <td colspan="6" class="empty-row">
                 <div class="empty-columns">
@@ -45,9 +48,12 @@
                     <span>{{ $approval->targetdate->format('Y-m-d') }}</span>
                     <span>{{ $approval->reason }}</span>
                     <span>{{ $approval->created_at->format('Y-m-d') }}</span>
-                    <!-- 管理者は修正画面、一般は勤怠承認待ち画面に飛ぶようにする -->
                     <span>
+                        @if($loginUser->role === 1)
                         <a href="{{ route('stampCorrection', $approval->id) }}" class="detail-item">詳細</a>
+                        @else
+                        <a href="{{ route('attendance.detail', $approval->id) }}" class="detail-item">詳細</a>
+                        @endif
                     </span>
                 </div>
             </td>
