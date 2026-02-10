@@ -33,4 +33,9 @@ class Detail extends Model
         'rest_start2' => 'datetime',
         'rest_end2' => 'datetime',
     ];
+
+    public function approval()
+    {
+        return $this->belongTo(Approval::class);
+    }
 }

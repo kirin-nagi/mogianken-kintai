@@ -27,5 +27,10 @@ class Approval extends Model
     protected $casts = [
         'targetdate' => 'datetime',
     ];
+
+    public function detail()
+    {
+        return $this->hasOne(Detail::class);
+    }
 }
 

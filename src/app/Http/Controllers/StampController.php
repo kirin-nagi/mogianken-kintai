@@ -38,8 +38,24 @@ class StampController extends Controller
 
         $approval = Approval::findOrFail($id);
 
-        $detail = Detail::findOrFail($id);
+        $detail = Detail::where('approval_id', $approval->id)->firstOrFail();
 
         return view('stamp.stamp_correction', compact('user', 'approval', 'detail'));
+    }
+
+    public function stampCorrection($attendance_correct_request_id)
+    {
+        $approval = Approval::findOrFail($attendance_correct_request_id);
+
+        // 二重承認防止
+        if($approval->status !== 0){
+            return back();
+        }
+
+        $approval->update([
+            'status' => 1
+        ]);
+
+        return back();
     }
 }

@@ -34,7 +34,13 @@
         <tr>
             <td colspan="6" class="empty-row">
                 <div class="empty-columns">
-                    <span>承認待ち</span>
+                    <span>
+                        @if($approval->status === 0)
+                        承認待ち
+                        @else
+                        承認済み
+                        @endif
+                    </span>
                     <span>{{ $approval->user->name }}</span>
                     <span>{{ $approval->targetdate->format('Y-m-d') }}</span>
                     <span>{{ $approval->reason }}</span>
