@@ -2,52 +2,54 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/stamp_correction.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/stamp_detail.css') }}">
 @endsection
 
 @section('content')
 <div class="stamp-correction__content">
-    <div class="detail__heading">
-        <p class="detail__heading-item">勤怠詳細</p>
+    <div class="stamp-correction__heading">
+        <p class="stamp-correction__heading-item">勤怠詳細</p>
     </div>
     <div class="stamp-correction__table">
         <table class="stamp-correction__inner">
-            <tr>
-                <th>名前</th>
-                <td>{{ $approval->user->name }}</td>
-            </tr>
-            <tr>
-                <th>日付</th>
-                <td>
-                    {{ $detail->work_date->format('Y') }}年
-                    {{ $detail->work_date->format('n月j日') }}
+            <tr class="stamp-correction__item">
+                <th class="heading-item">名前</th>
+                <td class="text-item">
+                    <p class="approval-name">{{ $approval->user->name }}</p>
                 </td>
             </tr>
-            <tr>
-                <th>出勤・退勤</th>
-                <td>
-                    {{ $detail->start_work->format('H:i') }}
-                    {{ $detail->end_work->format('H:i') }}
+            <tr class="stamp-correction__item">
+                <th class="heading-item">日付</th>
+                <td class="date-time">
+                    <p class="top-item">{{ $detail->work_date->format('Y') }}年</p>
+                    <p class="bottom-item">{{ $detail->work_date->format('n月j日') }}</p>
                 </td>
             </tr>
-            <tr>
-                <th>休憩</th>
-                <td>
-                    {{ $detail->rest_start->format('H:i') }}
-                    {{ $detail->rest_end->format('H:i') }}
+            <tr class="stamp-correction__item">
+                <th class="heading-item">出勤・退勤</th>
+                <td class="date-time">
+                    <p class="top-item">{{ $detail->start_work->format('H:i') }}</p>
+                    <p class="bottom-item">{{ $detail->end_work->format('H:i') }}</p>
                 </td>
             </tr>
-            <tr>
-                <th>休憩２</th>
-                <td>
-                    {{ $detail->rest_start2?->format('H:i') }}
-                    {{ $detail->rest_end2?->format('H:i') }}
+            <tr class="stamp-correction__item">
+                <th class="heading-item">休憩</th>
+                <td class="date-time">
+                    <p class="top-item">{{ $detail->rest_start->format('H:i') }}</p>
+                    <p class="bottom-item">{{ $detail->rest_end->format('H:i') }}</p>
                 </td>
             </tr>
-            <tr>
-                <th>備考</th>
-                <td>
-                    {{ $detail->reason }}
+            <tr class="stamp-correction__item">
+                <th class="heading-item">休憩２</th>
+                <td class="date-time">
+                    <p class="top-item">{{ $detail->rest_start2?->format('H:i') }}</p>
+                    <p class="bottom-item">{{ $detail->rest_end2?->format('H:i') }}</p>
+                </td>
+            </tr>
+            <tr class="stamp-correction__item">
+                <th class="heading-item">備考</th>
+                <td class="text-item">
+                    <p class="detail-reason">{{ $detail->reason }}</p>
                 </td>
             </tr>
         </table>
