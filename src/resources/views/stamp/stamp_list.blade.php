@@ -38,7 +38,7 @@
             <td colspan="6" class="empty-row">
                 <div class="empty-columns">
                     <span>
-                        @if($approval->status === 0)
+                        @if((int)$approval->status === 0)
                         承認待ち
                         @else
                         承認済み
@@ -50,7 +50,7 @@
                     <span>{{ $approval->created_at->format('Y-m-d') }}</span>
                     <span>
                         @if($loginUser->role === 1)
-                        <a href="{{ route('stampCorrection', $approval->id) }}" class="detail-item">詳細</a>
+                        <a href="{{ route('stamp.stampCorrection', $approval->id) }}" class="detail-item">詳細</a>
                         @else
                         <a href="{{ route('attendance.detail', $approval->id) }}" class="detail-item">詳細</a>
                         @endif

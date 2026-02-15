@@ -38,4 +38,5 @@ class Detail extends Model
     {
         return $this->belongTo(Approval::class);
     }
+
 }

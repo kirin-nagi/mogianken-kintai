@@ -15,7 +15,7 @@ class AttendanceController extends Controller
 {
     public function adminList(Request $request)
     {
-        $currentDay = $request->day ? Carbon::createFromFormat('Y-m-d', $request->day)->startOfDay() : now()->startOfDay();
+        $currentDay = $request->day ?Carbon::createFromFormat('Y-m-d', $request->day)->startOfDay() : now()->startOfDay();
 
         $prevDay = $currentDay->copy()->subDay();
         $nextDay = $currentDay->copy()->addDay();

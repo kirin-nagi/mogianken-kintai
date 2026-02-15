@@ -50,5 +50,5 @@ Route::post('/admin/attendance/{id}', [AdminAttendanceController::class, 'adminD
 Route::get('/admin/staff/list', [AdminAttendanceController::class, 'showAdminStaff'])->name('admin.staffList');
 Route::get('/admin/attendance/staff/{id}', [AdminAttendanceController::class, 'showAdminList'])->name('admin.attendanceList');
 Route::get('/stamp_correction_request/list',[StampController::class, 'showStamp'])->name('stampList');
-Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [StampController::class, 'showCorrection'])->name('showCorrection');
-Route::post('/stamp_correction_request/approve/{attendance_correct_request_id}', [StampController::class, 'stampCorrection'])->name('stampCorrection');
+Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [StampController::class, 'showCorrection'])->name('stamp.showCorrection');
+Route::post('/stamp_correction_request/approve/{attendance_correct_request_id}', [StampController::class, 'stampCorrection'])->name('stamp.stampCorrection');

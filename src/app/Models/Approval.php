@@ -25,6 +25,7 @@ class Approval extends Model
     }
 
     protected $casts = [
+        'status' => 'integer',
         'targetdate' => 'datetime',
     ];
 

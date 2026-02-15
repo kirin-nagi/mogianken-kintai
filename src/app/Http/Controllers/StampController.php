@@ -14,20 +14,22 @@ class StampController extends Controller
     {
         $user = Auth::user();
 
-        $query = Approval::with('user')
-        ->where('status', 0)
-        ->join('users', 'approvals.user_id', '=', 'users.id');
+        $query = Approval::query()
+        ->where('status', '=',  0)
+        ->whereHAs('detail')
+        ->with('user');
 
         if(!$user->isAdmin())
             {
-                $query->where('approvals.user_id', $user->id);
+                $query->where('user_id', $user->id);
             }
 
             $approvals = $query
-                ->orderBy('users.name', 'asc')
-                ->orderBy('approvals.targetdate', 'asc')
-                ->select('approvals.*')
-                ->get();
+                ->get()
+                ->sortBy([
+                    fn($a, $b)=> $a->user->name <=> $b->user->name,
+                    fn($a, $b)=> $a->targetdate <=> $b->targetdate,
+                ]);
 
         return view('stamp.stamp_list', compact('approvals'));
     }
@@ -36,26 +38,30 @@ class StampController extends Controller
     {
         $user = Auth::user();
 
-        $approval = Approval::findOrFail($id);
+        if(!$user->isAdmin()){
+            abort(403);
+        }
+
+        $approval = Approval::with('detail')
+        ->findOrFail($id);
 
         $detail = $approval->detail;
 
-        return view('stamp.stamp_correction', compact('user', 'approval', 'detail'));
+        return view('stamp.stamp_correction', compact('user', 'approval', 'detail' ));
     }
 
     public function stampCorrection($attendance_correct_request_id)
     {
         $approval = Approval::findOrFail($attendance_correct_request_id);
 
-        // 二重承認防止
         if($approval->status !== 0){
-            return back();
+            return redirect()->route('stamp.showCorrection', $approval->id);
         }
 
         $approval->update([
             'status' => 1
         ]);
 
-        return back();
+        return redirect()->route('stamp.showCorrection', $approval->id);
     }
 }

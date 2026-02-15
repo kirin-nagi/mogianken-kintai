@@ -95,3 +95,18 @@ body {
     cursor: pointer;
     font-size: 18px;
 }
+
+.stamp__button-approved{
+    display: block;
+    margin-left: auto;
+    padding: 10px;
+    width: 130px;
+    height: 50px;
+    border: none;
+    border-radius: 3px;
+    background: #7c7c7c;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+}
