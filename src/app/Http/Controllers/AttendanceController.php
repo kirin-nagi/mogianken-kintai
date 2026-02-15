@@ -96,22 +96,35 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.thanks');
     }
 
-    // 仮 勤怠詳細画面
-    public function detailStore(DetailRequest $request, $id)
-    {
-        $attendance = Attendance::findOrFail($id);
-
-        return redirect()->route('attendance.detail', $id);
-    }
-
+    // 勤怠詳細画面
     public function showDetail($id)
     {
         $user = Auth::user();
 
         $attendance = Attendance::findOrFail($id);
 
-    return view('attendance.detail', compact('attendance', 'user'));
+        $canEdit = !is_null($attendance->status);
+
+    return view('attendance.detail', compact('attendance', 'user', 'canEdit'));
     }
 
+    public function detailStore(DetailRequest $request, $id)
+    {
+    // 勤怠レコードを取得
+    $attendance = Attendance::findOrFail($id);
+
+    // DBの保存
+    $attendance->update([
+        'start_work' => $request->input('start_work'),
+        'end_work' => $request->input('end_work'),
+        'rest_start' => $request->input('rest_start'),
+        'end_start' => $request->input('end_start'),
+        'rest_start2' => $request->input('rest_start2') ?: null,
+        'rest_end2' => $request->input('rest_end2') ?: null,
+        'description' => $request->input('description'),
+    ]);
+
+        return redirect()->route('attendance.showDetail', $id);
+    }
 
 }

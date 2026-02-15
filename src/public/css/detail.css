@@ -1,7 +1,6 @@
 /* 勤怠詳細画面 */
 body {
     background-color: #EEEEEE;
-    margin: 0 auto;
 }
 
 .detail-form__content {
@@ -14,6 +13,7 @@ body {
     padding-left: 14px;
     font-weight: bold;
     font-size: 24px;
+    margin-bottom: 30px;
 }
 
 .detail__heading-item::before {
@@ -26,25 +26,52 @@ body {
     background-color: #333;
 }
 
+.form{
+    border-radius: 5px;
+    font-weight: bold;
+}
+
 .form__group {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    max-width: 900px;
-    margin: 0 auto;
-    background-color: white;
+    background-color: #fff;
+    border-bottom: 3px solid #EEEEEE;
+}
+
+.form__group--title{
+    display: flex;
+    align-items: center;
+    width: 300px;
+    padding: 18px 10px;
+    color: #000;
+    font-weight: bold;
 }
 
 .form__group-content {
-    max-width: 900px;
-    max-height: 555px;
+    flex: 1;
+    padding: 16px 8px;
+}
 
-    margin: 0 auto;
-    background-color: white;
+.user-name{
+    font-weight: bold;
+}
+
+.date{
+    font-weight: bold;
+}
+
+.form__input--text{
+    display: flex;
+    align-items: center;
+    gap: 80px;
+}
+
+.form__input--text input[type="time"]{
+    padding: 6px;
+    font-size: 16px;
 }
 
 .form__input--textarea textarea {
-    width: 316px;
+    width: 360px;
     height: 72px;
 }
 
@@ -60,6 +87,8 @@ body {
     max-width: 900px;
     display: flex;
     justify-content: flex-end;
+    background-color: #EEEEEE;
+    padding: 10px;
 }
 
 .form__button-submit {
