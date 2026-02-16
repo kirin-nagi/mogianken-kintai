@@ -33,5 +33,10 @@ class Approval extends Model
     {
         return $this->hasOne(Detail::class);
     }
+
+    public function attendance()
+    {
+        return $this->belongsTo(Attendance::class);
+    }
 }
 

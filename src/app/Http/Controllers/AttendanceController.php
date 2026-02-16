@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\User;
 use App\Models\Rest;
+use App\Models\Approval;
 use App\Http\Requests\DetailRequest;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -101,11 +102,18 @@ class AttendanceController extends Controller
     {
         $user = Auth::user();
 
+
         $attendance = Attendance::findOrFail($id);
 
-        $canEdit = !is_null($attendance->status);
+        $approval = Approval::where('user_id',$attendance->user_id)
+        ->whereDate('targetdate', $attendance->start_work)
+        ->first();
 
-    return view('attendance.detail', compact('attendance', 'user', 'canEdit'));
+        $canEdit = optional($approval)->status === 1;
+
+        $detail = optional($approval)->detail;
+
+    return view('attendance.detail', compact('attendance', 'approval', 'user', 'canEdit', 'detail'));
     }
 
     public function detailStore(DetailRequest $request, $id)

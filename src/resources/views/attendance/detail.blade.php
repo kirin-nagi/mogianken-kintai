@@ -25,7 +25,12 @@
                 <span class="form__label--item">日付</span>
             </div>
             <div class="form__group-content">
-                <div id="date" class="date"></div>
+                <div id="date" class="date">
+                    @if('detail')
+                    <p class="top-item">{{ $detail->work_date->format('Y') }}年</p>
+                    <p class="bottom-item">{{ $detail->work_date->format('n月j日') }}</p>
+                    @endif
+                </div>
             </div>
         </div>
         <div class="form__group">
@@ -88,7 +93,7 @@
             </div>
         </div>
         <div class="form__button">
-            @if(isset($canEdit) && $canEdit)
+            @if($canEdit)
             <button class="form__button-submit" type="submit">修正</button>
             @else
             <span class="form__button-item">＊承認待ちのため修正できません</span>
