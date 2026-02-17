@@ -42,6 +42,7 @@ class AttendanceSeeder extends Seeder
 
                 $attendance = Attendance::create([
                     'user_id' => $user->id,
+                    'work_date' => $date->toDateString(),
                     'start_work' => $start,
                     'end_work' => $end,
                     'total_work' => $totalWork,

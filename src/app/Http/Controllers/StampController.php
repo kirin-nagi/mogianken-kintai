@@ -36,31 +36,27 @@ class StampController extends Controller
 
     public function showCorrection($id)
     {
-        $user = Auth::user();
+        $approval = Approval::where('id', $id)
+        ->whereHas('detail')
+        ->firstOrFail();
 
-        if(!$user->isAdmin()){
-            abort(403);
-        }
-
-        $approval = Approval::with('detail')
-        ->findOrFail($id);
-
-        $detail = $approval->detail;
-
-        return view('stamp.stamp_correction', compact('user', 'approval', 'detail' ));
+        return view('stamp.stamp_correction', [
+            'approval' =>$approval,
+            'detail' => $approval->detail
+        ]);
     }
 
-    public function stampCorrection($attendance_correct_request_id)
+    public function stampCorrection($id)
     {
-        $approval = Approval::findOrFail($attendance_correct_request_id);
+        $approval = Approval::findOrFail($id);
 
-        if($approval->status !== 0){
-            return redirect()->route('stamp.showCorrection', $approval->id);
-        }
+        if($approval->status === 0){
 
         $approval->update([
             'status' => 1
         ]);
+        }
+
 
         return redirect()->route('stamp.showCorrection', $approval->id);
     }

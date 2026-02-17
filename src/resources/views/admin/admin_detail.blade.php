@@ -2,8 +2,9 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/admin/detail.css') }}">
+<link rel="stylesheet" href="{{ asset('css/detail.css') }}">
 @endsection
+
 
 @section('content')
 <div class="detail-form__content">
@@ -14,7 +15,7 @@
         @csrf
         <div class="form__group">
             <div class="form__group--title">
-                <span class="form__label--item">名前</div>
+                <span class="form__label--item">名前</span>
             </div>
             <div class="form__group-content">
                 <p class="user-name">{{ $attendance->user->name }}</p>
@@ -22,63 +23,66 @@
         </div>
         <div class="form__group">
             <div class="form__group--title">
-                <span class="form__label--item">日付</div>
+                <span class="form__label--item">日付</span>
             </div>
             <div class="form__group-content">
-                <div id="date" class="date"></div>
+                <div id="date" class="date">
+                    <p class="top-item"></p>
+                    <p class="bottom-item"></p>
+                </div>
             </div>
         </div>
         <div class="form__group">
             <div class="form__group--title">
-                <span class="form__label--item">出勤・退勤</div>
+                <span class="form__label--item">出勤・退勤</span>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="time" name="work-time" />
-                    <input type="time" name="work-time" />
+                    <input type="time" name="start_work" value="{{ old('start_work', $attendance->start_work) }}" />
+                    <span class="time-separator">～</span>
+                    <input type="time" name="end_work" value="{{ old('end_work', $attendance->end_work) }}" />
                 </div>
                 <div class="form__error">
-                    @error('work-time')
-                    {{ $message }}
-                    @enderror
+                    @error('start_work') {{ $message }}@enderror
+                    @error('end_work') {{ $message }}@enderror
                 </div>
             </div>
         </div>
         <div class="form__group">
             <div class="form__group--title">
-                <span class="form__label--item">休憩</div>
+                <span class="form__label--item">休憩</span>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="time" name="rest-time" />
-                    <input type="time" name="rest-time" />
+                    <input type="time" name="rest_start" value="{{ old('rest_start', $attendance->rest_start) }}" />
+                    <span class="time-separator">～</span>
+                    <input type="time" name="rest_end" value="{{ old('rest_end', $attendance->rest_end) }}" />
                 </div>
                 <div class="form__error">
-                    @error('rest-time')
-                    {{ $message }}
-                    @enderror
+                    @error('rest_start') {{ $message }}@enderror
+                    @error('rest_end') {{ $message }}@enderror
                 </div>
             </div>
         </div>
         <div class="form__group">
             <div class="form__group--title">
-                <span class="form__label--item">休憩2
-                </div>
+                <span class="form__label--item">休憩2</span>
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="time" name="rest-time" />
-                    <input type="time" name="rest-time" />
+                    <input type="time" name="rest_start2" value="{{ old('rest_start2', $attendance->rest_start2) }}" />
+                    <span class="time-separator">～</span>
+                    <input type="time" name="rest_end2" value="{{ old('rest_end2', $attendance->rest_end2) }}" />
                 </div>
             </div>
         </div>
         <div class="form__group">
             <div class="form__group--title">
-                <span class="form__label--item">備考</div>
+                <span class="form__label--item">備考</span>
             </div>
             <div class="form__group-content">
                 <div class="form__input--textarea">
-                    <textarea name="description"></textarea>
+                    <textarea name="description">{{ old('description', $attendance->description) }}</textarea>
                 </div>
                 <div class="form__error">
                     @error('description')

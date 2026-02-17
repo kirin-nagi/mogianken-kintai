@@ -26,11 +26,16 @@
             </div>
             <div class="form__group-content">
                 <div id="date" class="date">
-                    @if('detail')
-                    <p class="top-item">{{ $detail->work_date->format('Y') }}年</p>
-                    <p class="bottom-item">{{ $detail->work_date->format('n月j日') }}</p>
+                    @if($year && $monthDay)
+                    <p class="top-item">{{ $year }}年</p>
+                    <p class="bottom-item">
+                        {{ (int)explode('-', $monthDay)[0] }}月
+                        {{ (int)explode('-', $monthDay)[1] }}日
+                    </p>
                     @endif
                 </div>
+                <input type="hidden" name="year" value="{{ $year }}">
+                <input type="hidden" name="month_day" value="{{ $monthDay }}">
             </div>
         </div>
         <div class="form__group">
@@ -93,10 +98,16 @@
             </div>
         </div>
         <div class="form__button">
-            @if($canEdit)
+            @if($viewState === 'request')
             <button class="form__button-submit" type="submit">修正</button>
-            @else
+            @endif
+
+            @if($viewState === 'pending')
             <span class="form__button-item">＊承認待ちのため修正できません</span>
+            @endif
+
+            @if($viewState === 'approved')
+            <button class="form__button-submit" type="submit">修正</button>
             @endif
         </div>
     </form>

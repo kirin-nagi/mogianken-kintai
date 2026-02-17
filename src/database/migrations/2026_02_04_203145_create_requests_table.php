@@ -16,8 +16,9 @@ class CreateRequestsTable extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('attendance_id')->constrained('attendances')->cascadeOnDelete();
             $table->foreignId('approval_id')->constrained('approvals')->cascadeOnDelete();
-            $table->datetime('work_date');
+            $table->date('work_date');
             $table->datetime('start_work');
             $table->datetime('end_work');
             $table->datetime('rest_start');

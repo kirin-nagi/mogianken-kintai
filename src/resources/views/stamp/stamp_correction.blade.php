@@ -60,7 +60,7 @@
         </table>
     </div>
     <div class="stamp__button">
-        @if($approval->status === 0)
+        @if($approval->isPending())
         <form method='post' action="{{ route('stamp.stampCorrection', $approval->id) }}" >
             @csrf
             <button class="stamp__button-submit" type="submit">承認</button>

@@ -36,7 +36,7 @@ class Detail extends Model
 
     public function approval()
     {
-        return $this->belongTo(Approval::class);
+        return $this->belongsTo(Approval::class);
     }
 
 }

@@ -16,6 +16,7 @@ class CreateApprovalsTable extends Migration
         Schema::create('approvals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('attendance_id')->constrained('attendances')->cascadeOnDelete();
             $table->string('reason')->comment('申請理由');
             $table->tinyInteger('status')->default(0)->comment('0:承認待ち 1:承認済み');
             $table->datetime('targetdate')->comment('対象日時');
@@ -31,5 +32,10 @@ class CreateApprovalsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('approvals');
+
+        Schema::table('approvals', function (Blueprint $table) {
+        $table->dropForeign(['attendance_id']);
+        $table->dropColumn('attendance_id');
+    });
     }
 }

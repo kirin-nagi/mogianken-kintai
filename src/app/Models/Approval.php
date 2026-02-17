@@ -38,5 +38,13 @@ class Approval extends Model
     {
         return $this->belongsTo(Attendance::class);
     }
+
+    public function isPending(): bool{
+        return $this->status === 0;
+    }
+
+    public function isApproved(): bool{
+        return $this->status === 1;
+    }
 }
 

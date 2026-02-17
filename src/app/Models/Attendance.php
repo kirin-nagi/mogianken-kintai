@@ -89,4 +89,9 @@ class Attendance extends Model
         return $this->end_work->diffInSeconds($this->start_work) - ($this->rests->sum('rest_time') * 60);
     }
 
+    public function approvals()
+    {
+        return $this->hasMany(Approval::class);
+    }
+
 }
