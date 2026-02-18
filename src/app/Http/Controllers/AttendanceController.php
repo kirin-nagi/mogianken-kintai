@@ -106,7 +106,7 @@ class AttendanceController extends Controller
         $attendance = Attendance::findOrFail($id);
 
         // 修正申請
-        $approval = Approval::where('attendance_id',$attendance->id)
+        $approval = Approval::where('attendance_id', $attendance->id)
         ->latest()
         ->first();
 
@@ -114,23 +114,11 @@ class AttendanceController extends Controller
             $viewState = 'request';
         } elseif ($approval->isPending()) {
             $viewState = 'pending';
-        } elseif ($approval->isApproved()) {
+        } else {
             $viewState = 'approved';
         }
 
-
-        if ($approval && $approval->detail && $approval->detail->work_date){
-            $baseDate =  Carbon::parse($approval->detail->work_date);
-        } elseif ($attendance->start_work){
-            $baseDate = Carbon::parse($attendance->start_work);
-        } else {
-            $baseDate = null;
-        };
-
-            $year = $baseDate ? $baseDate->year:  null;
-            $monthDay = $baseDate ? $baseDate->format('m-d') : null;
-
-        return view('attendance.detail', compact('attendance', 'approval', 'user','viewState', 'year', 'monthDay'));
+        return view('attendance.detail', compact('attendance', 'approval', 'user','viewState'));
     }
 
     public function detailStore(DetailRequest $request, $id)
@@ -138,20 +126,16 @@ class AttendanceController extends Controller
     // 勤怠レコードを取得
     $attendance = Attendance::findOrFail($id);
 
-    [$month, $day] = explode('-', $request->month_day);
-
-    $date = Carbon::create(
-        (int)$request->year, (int)$month, (int)$day
-    );
+    $date = $attendance->work_date->format('Y-m-d');
 
     // DBの保存
     $attendance->update([
-        'start_work' => Carbon::parse($date->format('Y-m-d') . ' ' . $request->start_work),
-        'end_work' => Carbon::parse($date->format('Y-m-d') . ' ' . $request->end_work),
-        'rest_start' => Carbon::parse($date->format('Y-m-d') . ' ' . $request->rest_start),
-        'rest_end' => Carbon::parse($date->format('Y-m-d') . ' ' . $request->rest_end),
-        'rest_start2' => $request->rest_start2 ? Carbon::parse($date->format('Y-m-d') . ' ' . $request->rest_start2) : null,
-        'rest_end2' => $request->rest_end2 ? Carbon::parse($date->format('Y-m-d') . ' ' . $request->rest_end2) : null,
+        'start_work' => Carbon::parse($date . ' ' . $request->start_work),
+        'end_work' => Carbon::parse($date . ' ' . $request->end_work),
+        'rest_start' => Carbon::parse($date . ' ' . $request->rest_start),
+        'rest_end' => Carbon::parse($date . ' ' . $request->rest_end),
+        'rest_start2' => $request->rest_start2 ? Carbon::parse($date . ' ' . $request->rest_start2) : null,
+        'rest_end2' => $request->rest_end2 ? Carbon::parse($date . ' ' . $request->rest_end2) : null,
         'description' => $request->input('description'),
     ]);
 

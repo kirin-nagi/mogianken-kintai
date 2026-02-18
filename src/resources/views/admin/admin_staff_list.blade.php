@@ -8,7 +8,7 @@
 @section('content')
 <div class="admin-each__content">
     <div class="admin-each__heading">
-        <div id="date" class="date">{{ $user->name }}の勤務</div>
+        <div id="date" class="date">{{ $user->name }}さんの勤務</div>
     </div>
     <div class="month-navigation">
         <a href="{{ route('admin.attendanceList', ['id' => $user->id,'month' => $prevMonth->format('Y-m')]) }}" class="prev-month">

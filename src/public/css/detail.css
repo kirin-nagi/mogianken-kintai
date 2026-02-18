@@ -56,7 +56,9 @@ body {
 }
 
 .date{
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 170px;
 }
 
 .form__input--text{

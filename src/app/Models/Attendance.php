@@ -14,12 +14,14 @@ class Attendance extends Model
 
     protected $fillable = [
         'user_id',
+        'work_date',
         'start_work',
         'end_work',
         'total_work',
     ];
 
     protected $casts = [
+        'work_date' => 'date',
         'start_work' => 'datetime',
         'end_work' => 'datetime',
     ];

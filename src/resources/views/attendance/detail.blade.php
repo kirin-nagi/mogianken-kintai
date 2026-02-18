@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="{{ asset('css/detail.css') }}">
 @endsection
 
-
 @section('content')
 @if($viewState === 'pending')
 <div class="stamp-correction__content">
@@ -82,16 +81,9 @@
             </div>
             <div class="form__group-content">
                 <div id="date" class="date">
-                    @if($year && $monthDay)
-                    <p class="top-item">{{ $year }}年</p>
-                    <p class="bottom-item">
-                        {{ (int)explode('-', $monthDay)[0] }}月
-                        {{ (int)explode('-', $monthDay)[1] }}日
-                    </p>
-                    @endif
+                    <p class="top-item">{{ $attendance->work_date->format('Y') }}年</p>
+                    <p class="bottom-item">{{ $attendance->work_date->format('n月j日') }}</p>
                 </div>
-                <input type="hidden" name="year" value="{{ $year }}">
-                <input type="hidden" name="month_day" value="{{ $monthDay }}">
             </div>
         </div>
         <div class="form__group">
@@ -100,9 +92,9 @@
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="time" name="start_work" value="{{ old('start_work', $attendance->start_work) }}" />
+                    <input type="time" name="start_work" value="{{ old('start_work', $attendance->start_work ? $attendance->start_work->format('H:i') : '' ) }}" />
                     <span class="time-separator">～</span>
-                    <input type="time" name="end_work" value="{{ old('end_work', $attendance->end_work) }}" />
+                    <input type="time" name="end_work" value="{{ old('end_work', $attendance->end_work ? $attendance->end_work->format('H:i') : '' ) }}" />
                 </div>
                 <div class="form__error">
                     @error('start_work') {{ $message }}@enderror
@@ -116,9 +108,9 @@
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="time" name="rest_start" value="{{ old('rest_start', $attendance->rest_start) }}" />
+                    <input type="time" name="rest_start" value="{{ old($attendance->rest_start ?$attendance->rest_start->format('H:i') : '' ) }}" />
                     <span class="time-separator">～</span>
-                    <input type="time" name="rest_end" value="{{ old('rest_end', $attendance->rest_end) }}" />
+                    <input type="time" name="rest_end" value="{{ old($attendance->rest_end ?$attendance->rest_end->format('H:i') : '' ) }}" />
                 </div>
                 <div class="form__error">
                     @error('rest_start') {{ $message }}@enderror
@@ -132,9 +124,9 @@
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="time" name="rest_start2" value="{{ old('rest_start2', $attendance->rest_start2) }}" />
+                    <input type="time" name="rest_start2" value="{{ old($attendance->rest_start2 ?$attendance->rest_start2->format('H:i') : '' )}}" />
                     <span class="time-separator">～</span>
-                    <input type="time" name="rest_end2" value="{{ old('rest_end2', $attendance->rest_end2) }}" />
+                    <input type="time" name="rest_end2" value="{{ old($attendance->rest_end2 ?$attendance->rest_end2->format('H:i') : '' )}}" />
                 </div>
             </div>
         </div>
@@ -169,20 +161,4 @@
         </div>
     </form>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded',() => {
-        function updateClock(){
-            const now = new Date();
-
-            document.getElementById('date').textContent =
-            `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
-        }
-
-        updateClock();
-        setInterval(updateClock, 1000);
-    });
-</script>
 @endsection
