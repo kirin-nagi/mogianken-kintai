@@ -147,15 +147,9 @@
         </div>
         @endif
         <div class="form__button">
-            @if($viewState === 'request')
-            <button class="form__button-submit" type="submit">修正</button>
-            @endif
-
-            @if($viewState === 'pending')
+            @if($approval && $approval->status === 0)
             <span class="form__button-item">＊承認待ちのため修正できません</span>
-            @endif
-
-            @if($viewState === 'approved')
+            @else
             <button class="form__button-submit" type="submit">修正</button>
             @endif
         </div>

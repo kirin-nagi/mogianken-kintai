@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
+use App\Models\Approval;
 use App\Models\User;
 use App\Models\Rest;
+use App\Models\Detail;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Auth;
@@ -33,12 +35,55 @@ class AttendanceController extends Controller
         return view('admin.admin_list', compact('attendances', 'currentDay', 'prevDay','nextDay'));
     }
 
-    // 仮 勤怠詳細画面
+    //  勤怠詳細画面
     public function adminDetailStore(DetailRequest $request, $id)
     {
-        $attendance = Attendance::findOrFail($id);
+        // 勤怠レコードを取得
+    $attendance = Attendance::findOrFail($id);
+    $user = $attendance->user;
+    $date = $attendance->work_date->format('Y-m-d');
 
-        return redirect()->route('attendance.adminDetail', $id);
+    $reason = $request->description;
+
+    // DBの保存
+    $attendance->update([
+        'start_work' => Carbon::parse($date . ' ' . $request->start_work),
+        'end_work' => Carbon::parse($date . ' ' . $request->end_work),
+        'rest_start' => Carbon::parse($date . ' ' . $request->rest_start),
+        'rest_end' => Carbon::parse($date . ' ' . $request->rest_end),
+        'rest_start2' => $request->rest_start2 ? Carbon::parse($date . ' ' . $request->rest_start2) : null,
+        'rest_end2' => $request->rest_end2 ? Carbon::parse($date . ' ' . $request->rest_end2) : null,
+        'description' => $request->input('description'),
+    ]);
+
+    $approval = Approval::firstOrCreate(
+        [
+            'attendance_id' => $attendance->id,
+            'user_id' => $user->id,
+        ],
+
+        [
+            'reason' => $reason,
+            'status' => 0,
+            'targetdate' =>$attendance->work_date,
+        ]
+    );
+
+    Request::create([
+        'user_id' => $user->id,
+        'attendance_id' => $attendance->id,
+        'approval_id' => $approval_id,
+        'work_date' => $attendance->work_date,
+        'start_work' => Carbon::parse($date . ' ' . $request->start_work),
+        'end_work' => Carbon::parse($date . ' ' . $request->end_work),
+        'rest_start' => Carbon::parse($date . ' ' . $request->rest_start),
+        'rest_end' => Carbon::parse($date . ' ' . $request->rest_end),
+        'rest_start2' => $request->rest_start2 ? Carbon::parse($date . ' ' . $request->rest_start2) : null,
+        'rest_end2' => $request->rest_end2 ? Carbon::parse($date . ' ' . $request->rest_end2) : null,
+        'reason' => $reason,
+    ]);
+
+        return redirect()->route('attendance.adminShowDetail', $id);
     }
 
     // 勤怠詳細画面
@@ -46,9 +91,23 @@ class AttendanceController extends Controller
     {
         $user = Auth::user();
 
+
         $attendance = Attendance::findOrFail($id);
 
-    return view('admin.admin_detail', compact('attendance', 'user'));
+        // 修正申請
+        $approval = Approval::where('attendance_id', $attendance->id)
+        ->latest()
+        ->first();
+
+        if(!$approval){
+            $viewState = 'request';
+        } elseif ($approval->isPending()) {
+            $viewState = 'pending';
+        } else {
+            $viewState = 'approved';
+        }
+
+        return view('admin.admin_detail', compact('attendance', 'approval', 'user','viewState'));
     }
 
     // スタッフ一覧画面

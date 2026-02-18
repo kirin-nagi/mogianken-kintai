@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Attendance;
+use App\Models\Detail;
 use App\Models\User;
 use App\Models\Rest;
 use App\Models\Approval;
@@ -123,10 +124,12 @@ class AttendanceController extends Controller
 
     public function detailStore(DetailRequest $request, $id)
     {
-    // 勤怠レコードを取得
-    $attendance = Attendance::findOrFail($id);
 
+    $attendance = Attendance::findOrFail($id);
+    $user = $attendance->user;
     $date = $attendance->work_date->format('Y-m-d');
+
+    $reason = $request->description;
 
     // DBの保存
     $attendance->update([
@@ -137,6 +140,33 @@ class AttendanceController extends Controller
         'rest_start2' => $request->rest_start2 ? Carbon::parse($date . ' ' . $request->rest_start2) : null,
         'rest_end2' => $request->rest_end2 ? Carbon::parse($date . ' ' . $request->rest_end2) : null,
         'description' => $request->input('description'),
+    ]);
+
+    $approval = Approval::firstOrCreate(
+        [
+            'attendance_id' => $attendance->id,
+            'user_id' => $user->id,
+        ],
+
+        [
+            'reason' => $reason,
+            'status' => 0,
+            'targetdate' =>$attendance->work_date,
+        ]
+    );
+
+    Request::create([
+        'user_id' => $user->id,
+        'attendance_id' => $attendance->id,
+        'approval_id' => $approval_id,
+        'work_date' => $attendance->work_date,
+        'start_work' => Carbon::parse($date . ' ' . $request->start_work),
+        'end_work' => Carbon::parse($date . ' ' . $request->end_work),
+        'rest_start' => Carbon::parse($date . ' ' . $request->rest_start),
+        'rest_end' => Carbon::parse($date . ' ' . $request->rest_end),
+        'rest_start2' => $request->rest_start2 ? Carbon::parse($date . ' ' . $request->rest_start2) : null,
+        'rest_end2' => $request->rest_end2 ? Carbon::parse($date . ' ' . $request->rest_end2) : null,
+        'reason' => $request->description,
     ]);
 
         return redirect()->route('attendance.showDetail', $id);

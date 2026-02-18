@@ -24,8 +24,8 @@ class DetailRequest extends FormRequest
     public function rules()
     {
         return [
-            'work-time' => [],
-            'rest-time' => [],
+            'work-time' => ['required'],
+            'rest-time' => ['required'],
             'description' => ['required'],
         ];
     }

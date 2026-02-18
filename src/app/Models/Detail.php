@@ -25,7 +25,7 @@ class Detail extends Model
     ];
 
     protected $casts = [
-        'work_date' => 'datetime',
+        'work_date' => 'date',
         'start_work' => 'datetime',
         'end_work' => 'datetime',
         'rest_start' => 'datetime',
