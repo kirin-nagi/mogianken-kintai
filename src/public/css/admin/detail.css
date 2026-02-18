@@ -74,3 +74,9 @@ body {
     cursor: pointer;
     font-size: 18px;
 }
+
+.form__button-item {
+    height: 20px;
+    color: #ff0000;
+    text-align: left;
+}
