@@ -70,6 +70,7 @@ class AttendanceController extends Controller
 
         Attendance::create([
             'user_id' => auth()->id(),
+            'work_date' => today(),
             'start_work' => now(),
         ]);
 
@@ -87,15 +88,15 @@ class AttendanceController extends Controller
             return redirect()->route('attendance.show');
         }
 
-        $workMinutest = now()->diffInMinutest($attendance->start_work);
-        $restMinutest = $attendance->rests->sum('rest_time');
+        $workMinutes = now()->diffInMinutes($attendance->start_work);
+        $restMinutes = $attendance->rests->sum('rest_time');
 
         $attendance->update([
             'end_work' => now(),
-            'total_work' => $workMinutest - $restMinutest,
+            'total_work' => $workMinutes - $restMinutes,
         ]);
 
-        return redirect()->route('attendance.thanks');
+        return redirect()->route('attendance.show');
     }
 
     // 勤怠詳細画面

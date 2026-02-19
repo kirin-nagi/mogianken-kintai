@@ -42,7 +42,7 @@ class Attendance extends Model
     public static function todayForUser(){
 
         return self::where('user_id',auth()->id())
-        ->whereDate('start_work', today())
+        ->whereDate('work_date', today())
         ->first();
     }
 
