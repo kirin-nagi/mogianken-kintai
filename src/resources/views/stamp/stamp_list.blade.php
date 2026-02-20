@@ -52,7 +52,7 @@
                         @if($loginUser->role === 1)
                         <a href="{{ route('stamp.stampCorrection', $approval->id) }}" class="detail-item">詳細</a>
                         @else
-                        <a href="{{ route('attendance.detail', $approval->id) }}" class="detail-item">詳細</a>
+                        <a href="{{ route('attendance.detail', $approval->attendance->id) }}" class="detail-item">詳細</a>
                         @endif
                     </span>
                 </div>

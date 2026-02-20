@@ -24,8 +24,10 @@ class DetailRequest extends FormRequest
     public function rules()
     {
         return [
-            'work-time' => ['required'],
-            'rest-time' => ['required'],
+            'start_work' => ['required', 'date_format:H:i'],
+            'end_work' => ['required', 'date_format:H:i'],
+            'rest-start' => ['required', 'date_format:H:i'],
+            'rest_end' => ['required','date_format:H:i' ],
             'description' => ['required'],
         ];
     }
@@ -36,4 +38,9 @@ class DetailRequest extends FormRequest
             'description.required' => '備考を入力してください',
         ];
     }
+
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+{
+    dd($validator->errors()->toArray());
+}
 }

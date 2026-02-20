@@ -126,47 +126,38 @@ class AttendanceController extends Controller
     public function detailStore(DetailRequest $request, $id)
     {
 
+    dd($request->all());
+    
     $attendance = Attendance::findOrFail($id);
     $user = $attendance->user;
     $date = $attendance->work_date->format('Y-m-d');
 
-    $reason = $request->description;
-
-    // DBの保存
-    $attendance->update([
-        'start_work' => Carbon::parse($date . ' ' . $request->start_work),
-        'end_work' => Carbon::parse($date . ' ' . $request->end_work),
-        'rest_start' => Carbon::parse($date . ' ' . $request->rest_start),
-        'rest_end' => Carbon::parse($date . ' ' . $request->rest_end),
-        'rest_start2' => $request->rest_start2 ? Carbon::parse($date . ' ' . $request->rest_start2) : null,
-        'rest_end2' => $request->rest_end2 ? Carbon::parse($date . ' ' . $request->rest_end2) : null,
-        'description' => $request->input('description'),
-    ]);
-
-    $approval = Approval::firstOrCreate(
+    $approval = Approval::updateOrCreate(
         [
             'attendance_id' => $attendance->id,
             'user_id' => $user->id,
         ],
 
         [
-            'reason' => $reason,
+            'reason' => $request->description,
             'status' => 0,
-            'targetdate' =>$attendance->work_date,
+            'targetdate' =>$attendance->work_date->startOfDay(),
         ]
     );
 
-    Request::create([
+    dd($approval);
+
+    Detail::create([
         'user_id' => $user->id,
         'attendance_id' => $attendance->id,
         'approval_id' => $approval_id,
         'work_date' => $attendance->work_date,
-        'start_work' => Carbon::parse($date . ' ' . $request->start_work),
-        'end_work' => Carbon::parse($date . ' ' . $request->end_work),
-        'rest_start' => Carbon::parse($date . ' ' . $request->rest_start),
-        'rest_end' => Carbon::parse($date . ' ' . $request->rest_end),
-        'rest_start2' => $request->rest_start2 ? Carbon::parse($date . ' ' . $request->rest_start2) : null,
-        'rest_end2' => $request->rest_end2 ? Carbon::parse($date . ' ' . $request->rest_end2) : null,
+        'start_work' => Carbon::parse("$date { $request->start_work}"),
+        'end_work' => Carbon::parse("$date {$request->end_work}"),
+        'rest_start' => Carbon::parse("$date {$request->rest_start}"),
+        'rest_end' => Carbon::parse("$date { $request->rest_end}"),
+        'rest_start2' => $request->rest_start2 ? Carbon::parse("$date {$request->rest_start2}") : null,
+        'rest_end2' => $request->rest_end2 ? Carbon::parse("$date {$request->rest_end2}") : null,
         'reason' => $request->description,
     ]);
 

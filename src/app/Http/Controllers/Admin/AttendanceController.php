@@ -69,7 +69,7 @@ class AttendanceController extends Controller
         ]
     );
 
-    Request::create([
+    Detail::create([
         'user_id' => $user->id,
         'attendance_id' => $attendance->id,
         'approval_id' => $approval_id,

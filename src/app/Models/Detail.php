@@ -14,6 +14,8 @@ class Detail extends Model
 
     protected $fillable = [
         'user_id',
+        'attendance_id',
+        'approval_id',
         'work_date',
         'start_work',
         'end_work',

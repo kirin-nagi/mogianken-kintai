@@ -17,7 +17,7 @@ class StampController extends Controller
         $query = Approval::query()
         ->where('status', '=',  0)
         ->whereHAs('detail')
-        ->with('user');
+        ->with('user', 'attendance');
 
         if(!$user->isAdmin())
             {
@@ -56,7 +56,7 @@ class StampController extends Controller
             'status' => 1
         ]);
         }
-
+// 承認ボタンを押したらattendanceも更新されるようにしたい
 
         return redirect()->route('stamp.showCorrection', $approval->id);
     }
