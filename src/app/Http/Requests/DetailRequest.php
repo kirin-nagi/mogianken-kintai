@@ -24,10 +24,10 @@ class DetailRequest extends FormRequest
     public function rules()
     {
         return [
-            'start_work' => ['required', 'date_format:H:i'],
-            'end_work' => ['required', 'date_format:H:i'],
-            'rest-start' => ['required', 'date_format:H:i'],
-            'rest_end' => ['required','date_format:H:i' ],
+            'start_work' => ['required'],
+            'end_work' => ['required'],
+            'rest_start' => ['required'],
+            'rest_end' => ['required'],
             'description' => ['required'],
         ];
     }

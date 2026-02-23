@@ -13,7 +13,7 @@ class Approval extends Model
 
     protected $fillable = [
         'user_id',
-        'request_id',
+        'attendance_id',
         'reason',
         'status',
         'targetdate',

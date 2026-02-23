@@ -72,15 +72,15 @@ class AttendanceController extends Controller
     Detail::create([
         'user_id' => $user->id,
         'attendance_id' => $attendance->id,
-        'approval_id' => $approval_id,
+        'approval_id' => $approval->id,
         'work_date' => $attendance->work_date,
-        'start_work' => Carbon::parse($date . ' ' . $request->start_work),
-        'end_work' => Carbon::parse($date . ' ' . $request->end_work),
-        'rest_start' => Carbon::parse($date . ' ' . $request->rest_start),
-        'rest_end' => Carbon::parse($date . ' ' . $request->rest_end),
-        'rest_start2' => $request->rest_start2 ? Carbon::parse($date . ' ' . $request->rest_start2) : null,
-        'rest_end2' => $request->rest_end2 ? Carbon::parse($date . ' ' . $request->rest_end2) : null,
-        'reason' => $reason,
+        'start_work' => Carbon::parse("$date {$request->start_work}"),
+        'end_work' => Carbon::parse("$date {$request->end_work}"),
+        'rest_start' => Carbon::parse("$date {$request->rest_start}"),
+        'rest_end' => Carbon::parse("$date {$request->rest_end}"),
+        'rest_start2' => $request->rest_start2 ? Carbon::parse("$date {$request->rest_start2}") : null,
+        'rest_end2' => $request->rest_end2 ? Carbon::parse("$date {$request->rest_end2}") : null,
+        'reason' => $request->description,
     ]);
 
         return redirect()->route('attendance.adminShowDetail', $id);

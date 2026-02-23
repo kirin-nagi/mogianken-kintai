@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Detail;
 use App\Models\Approval;
+use App\Models\Attendance;
 
 class StampController extends Controller
 {
@@ -48,16 +50,46 @@ class StampController extends Controller
 
     public function stampCorrection($id)
     {
-        $approval = Approval::findOrFail($id);
+        DB::transaction(function () use ($id){
 
-        if($approval->status === 0){
+            $approval = Approval::with('detail')->findOrFail($id);
 
-        $approval->update([
-            'status' => 1
+            if ($approval->status !== 0){
+                return;
+            }
+
+            $approval->update([
+                'status' => 1
+            ]);
+
+            $detail = $approval->detail;
+
+            $attendance = Attendance::findOrFail($approval->attendance_id);
+
+            $attendance->update([
+                'start_work' => $detail->start_work,
+                'end_work' => $detail->end_work,
+            ]);
+
+            $workMinutes = $detail->end_work
+            ->diffInMinutes($detail->start_work);
+
+            $restMinutes = $detail->rest_end
+            ->diffInMinutes($detail->rest_start);
+
+            if ($detail->rest_start2 && $detail->rest_end2) {
+                $restMinutes += $detail->rest_end2
+                ->diffInMinutes($detail->rest_start2);
+            }
+
+            $attendance->update([
+                'total_work' => $workMinutes - $restMinutes,
+            ]);
+
+            return view('stamp.stamp_correction', [
+            'approval' =>$approval,
+            'detail' => $approval->detail
         ]);
-        }
-// 承認ボタンを押したらattendanceも更新されるようにしたい
-
-        return redirect()->route('stamp.showCorrection', $approval->id);
+    });
     }
 }
