@@ -12,8 +12,8 @@
     </div>
     <div class="stamp-list__inner">
         <div class="stamp-list__row">
-                <a class="stamp-list__link">承認待ち</a>
-                <a class="stamp-list__link">承認済み</a>
+                <a class="stamp-list__link active" href="{{ route('stampList') }}">承認待ち</a>
+                <a class="stamp-list__link" href="{{ route('stampList') }}?tab=approval">承認済み</a>
             </div>
         </div>
     </div>

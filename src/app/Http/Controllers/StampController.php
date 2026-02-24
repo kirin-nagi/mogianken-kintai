@@ -12,13 +12,15 @@ use App\Models\Attendance;
 
 class StampController extends Controller
 {
-    public function showStamp()
+    public function showStamp(Request $request)
     {
         $user = Auth::user();
 
+        $status = $request->get('tab') === 'approval' ? 1:0;
+
         $query = Approval::query()
-        ->where('status', '=',  0)
-        ->whereHAs('detail')
+        ->where('status', $status)
+        ->whereHas('detail')
         ->with('user', 'attendance');
 
         if(!$user->isAdmin())
