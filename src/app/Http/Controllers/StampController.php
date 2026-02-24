@@ -85,13 +85,12 @@ class StampController extends Controller
             }
 
             $attendance->update([
+                'rest_time' => $restMinutes,
                 'total_work' => $workMinutes - $restMinutes,
             ]);
+        });
 
-            return view('stamp.stamp_correction', [
-            'approval' =>$approval,
-            'detail' => $approval->detail
-        ]);
-    });
+
+        return redirect()->route('stamp.stampCorrection', $id);
     }
 }

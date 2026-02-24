@@ -38,9 +38,4 @@ class DetailRequest extends FormRequest
             'description.required' => '備考を入力してください',
         ];
     }
-
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-{
-    dd($validator->errors()->toArray());
-}
 }
