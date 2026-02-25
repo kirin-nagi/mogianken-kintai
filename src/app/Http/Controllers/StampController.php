@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Detail;
 use App\Models\Approval;
@@ -118,6 +119,40 @@ class StampController extends Controller
         });
 
 
-        return redirect()->route('stamp.stampCorrection', $id);
+        return redirect()->route('stamp.showCorrection', $id);
+    }
+
+    public function storeCorrection(Request $request)
+    {
+        DB::transaction(function () use ($request) {
+
+            $attendanceId = $request->attendance_id;
+
+            $approval = Approval::create([
+                'user_id' => auth()->id(),
+                'attendance_id' => $attendanceId,
+                'status' => 0,
+            ]);
+
+            $date = Carbon::parse($request->work_date)->format('Y-m-d');
+
+            Detail::create([
+                'approval_id' => $approval->id,
+                'attendance_id' => $attendanceId,
+                'user_id' => auth()->id(),
+                'work_date' => $request->work_date,
+
+                'start_work' => Carbon::parse("$date {$request->start_work}"),
+                'end_work' => Carbon::parse("$date {$request->end_work}"),
+
+                'rest_start' => Carbon::parse("$date {$request->rest_start}"),
+                'rest_end' => Carbon::parse("$date {$request->rest_end}"),
+                'rest_start2' => $request->rest_start2 ? Carbon::parse("$date {$request->rest_start2}") : null,
+                'rest_end2' => $request->rest_end2 ? Carbon::parse("$date {$request->rest_end2}") : null,
+                'reason' => $request->description,
+            ]);
+        });
+
+        return redirect()->route('stamp.showCorrection');
     }
 }

@@ -108,19 +108,19 @@ class AttendanceController extends Controller
         $attendance = Attendance::findOrFail($id);
 
         // 修正申請
-        $approval = Approval::where('attendance_id', $attendance->id)
+        $latestApproval = Approval::where('attendance_id', $attendance->id)
         ->latest()
         ->first();
 
-        if(!$approval){
+        if(!$latestApproval){
             $viewState = 'request';
-        } elseif ($approval->isPending()) {
+        } elseif ($latestApproval->isPending()) {
             $viewState = 'pending';
         } else {
             $viewState = 'approved';
         }
 
-        return view('attendance.detail', compact('attendance', 'approval', 'user','viewState'));
+        return view('attendance.detail', compact('attendance', 'user','viewState', 'latestApproval'));
     }
 
     public function detailStore(DetailRequest $request, $id)
@@ -130,12 +130,10 @@ class AttendanceController extends Controller
     $user = $attendance->user;
     $date = $attendance->work_date->format('Y-m-d');
 
-    $approval = Approval::updateOrCreate(
+    $approval = Approval::Create(
         [
             'attendance_id' => $attendance->id,
             'user_id' => $user->id,
-        ],
-        [
             'reason' => $request->description,
             'status' => 0,
             'targetdate' =>$attendance->work_date->startOfDay(),
