@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Detail;
 use App\Models\Approval;
 use App\Models\Attendance;
+use App\Models\Rest;
 
 class StampController extends Controller
 {
@@ -65,26 +66,52 @@ class StampController extends Controller
             ]);
 
             $detail = $approval->detail;
-
             $attendance = Attendance::findOrFail($approval->attendance_id);
-
-            $attendance->update([
-                'start_work' => $detail->start_work,
-                'end_work' => $detail->end_work,
-            ]);
 
             $workMinutes = $detail->end_work
             ->diffInMinutes($detail->start_work);
 
-            $restMinutes = $detail->rest_end
-            ->diffInMinutes($detail->rest_start);
+            $restMinutes = 0;
 
-            if ($detail->rest_start2 && $detail->rest_end2) {
-                $restMinutes += $detail->rest_end2
+            if($detail->rest_start && $detail->rest_end){
+                $minutes = $detail->rest_end
+                ->diffInMinutes($detail->rest_start);
+
+                $restMinutes += $minutes;
+
+                Rest::updateOrCreate(
+                    [
+                        'attendance_id' => $attendance->id,
+                        'rest_start' => $detail->rest_start,
+                    ],
+                    [
+                        'rest_end' => $detail->rest_end,
+                        'rest_time' => $minutes,
+                    ]
+                );
+            }
+
+            if($detail->rest_start2 && $detail->rest_end2){
+                $minutes= $detail->rest_end2
                 ->diffInMinutes($detail->rest_start2);
+
+                $restMinutes += $minutes;
+
+                Rest::updateOrCreate(
+                    [
+                        'attendance_id' => $attendance->id,
+                        'rest_start' => $detail->rest_start2,
+                    ],
+                    [
+                        'rest_end' => $detail->rest_end2,
+                        'rest_time' => $minutes,
+                    ]
+                );
             }
 
             $attendance->update([
+                'start_work' => $detail->start_work,
+                'end_work' => $detail->end_work,
                 'rest_time' => $restMinutes,
                 'total_work' => $workMinutes - $restMinutes,
             ]);
