@@ -84,6 +84,11 @@ table tr:first-child .empty-row {
     border-top: 1px solid #EEEEEE;
 }
 
+.detail-item,
+.detail-holiday {
+    grid-column: 6;
+}
+
 .detail-holiday {
     color: black;
     font-weight: bold;

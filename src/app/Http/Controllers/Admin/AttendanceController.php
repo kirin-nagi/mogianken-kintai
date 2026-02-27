@@ -38,40 +38,27 @@ class AttendanceController extends Controller
     //  勤怠詳細画面
     public function adminDetailStore(DetailRequest $request, $id)
     {
-        DB::transaction(function () use ($request,$id) {
+    DB::transaction(function () use ($request,$id) {
 
         // 勤怠レコードを取得
     $attendance = Attendance::findOrFail($id);
     $user = $attendance->user;
     $date = $attendance->work_date->format('Y-m-d');
 
-    $approval = Approval::updateOrCreate(
-        [
+    $approval = Approval::where('attendance_id', $attendance->id)
+    ->letest()
+    ->first();
+
+    if($approval){
+        $approval->update(['status' => 1]);
+    } else {
+        $approval = Approval::create([
             'attendance_id' => $attendance->id,
-        ],
-        [
             'user_id' => $user->id,
             'status' => 1,
             'targetdate' =>$attendance->work_date,
-        ]
-    );
-
-    
-    })
-
-
-
-
-    // DBの保存
-    $attendance->update([
-        'start_work' => Carbon::parse("$date {$request->start_work}"),
-        'end_work' => Carbon::parse("$date {$request->end_work}"),
-        'rest_start' => Carbon::parse("$date {$request->rest_start}"),
-        'rest_end' => Carbon::parse("$date {$request->rest_end}"),
-        'rest_start2' => $request->rest_start2 ? Carbon::parse("$date {$request->rest_start2}") : null,
-        'rest_end2' => $request->rest_end2 ? Carbon::parse("$date {$request->rest_end2}") : null,
-        'description' => $request->description,
-    ]);
+        ]);
+    }
 
     $detail = Detail::updateOrCreate(
         [
@@ -89,17 +76,55 @@ class AttendanceController extends Controller
         'rest_start2' => $request->rest_start2 ? Carbon::parse("$date {$request->rest_start2}") : null,
         'rest_end2' => $request->rest_end2 ? Carbon::parse("$date {$request->rest_end2}") : null,
         'reason' => $request->description,
-    ]
-
+        ]
     );
 
-        return redirect()->route('attendance.adminShowDetail', $id);
+    $workMinutes = $detail->end_work->diffInMinutes($detail->start_work);
+    $reatMinutes = 0;
+
+    Rest::where('attendance_id', $attendance->id)->delete();
+
+    if($detail->rest_start && $detail->rest_end) {
+        $minutes = $detail->rest_end->diffInMinutes($detail->rest_start);
+        $restMinutes += $minutes;
+
+        Rest::create([
+            'attendance_id' => $attendance->id,
+            'rest_start' => $detail->rest_start,
+            'rest_end' => $detail->rest_end,
+            'rest_time' => $minutes,
+        ]);
+    }
+
+    if($detail->rest_start2 && $detail->rest_end2) {
+        $minutes = $detail->rest_end2->diffInMinutes($detail->rest_start2);
+        $restMinutes = 0;
+
+        Rest::create([
+            'attendance_id' => $attendance->id,
+            'rest_start' => $detail->rest_start2,
+            'rest_end' => $detail->rest_end2,
+            'rest_time' => $minutes,
+        ]);
+    }
+
+    // DBの保存
+    $attendance->update([
+        'start_work' => $detail->start_work,
+        'end_work' =>   $detail->end_work,
+        'rest_time' => $reatMinutes,
+        'total_work' => $workMinutes - $restMinutes,
+        'description' => $request->description,
+    ]);
+    });
+
+        return redirect()->route('admin.attendanceList');
     }
 
     // 勤怠詳細画面
     public function showAdminDetail($id)
     {
-        $user = Auth::user();
+    $user = Auth::user();
 
 
         $attendance = Attendance::findOrFail($id);
@@ -117,7 +142,12 @@ class AttendanceController extends Controller
             $viewState = 'approved';
         }
 
-        return view('admin.admin_detail', compact('attendance', 'approval', 'user','viewState'));
+        return view('admin.admin_detail', [
+            'attendance' => $attendance,
+            'approval' => $approval,
+            'viewState' => $viewState,
+            'canEdit' => auth()->user()->isAdmin()
+            ]);
     }
 
     // スタッフ一覧画面

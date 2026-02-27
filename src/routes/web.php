@@ -25,8 +25,11 @@ Route::post('/register',[UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/login', [UserController::class,'showLogin'])->name('login');
 Route::get('/admin/login', [AdminLoginController::class, 'showAdminLogin'])->name('admin.showLogin');
-Route::post('/admin/login', [AdminLoginController::class, 'AdminLogin'])->name('admin.login');
 
+Route::middleware('guest:admin')->group(function(){
+    Route::get('/admin/login', [AdminLoginController::class, 'showAdminLogin'])->name('admin.showLogin');
+    Route::post('/admin/login', [AdminLoginController::class, 'AdminLogin'])->name('admin.login');
+});
 Route::middleware('auth')->group(function(){
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
@@ -34,9 +37,8 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->name('admin.')
 ->group(function(){
     Route::get('attendance/list',[AdminAttendanceController::class, 'adminList'])->name('list');
 });
+    Route::get('/attendance', [AttendanceController::class, 'showAttendance'])->name('attendance.show');
 
-// 後からmiddlewareに入れる
-Route::get('/attendance', [AttendanceController::class, 'showAttendance'])->name('attendance.show');
 Route::post('/attendance/start',[AttendanceController::class, 'start'])->name('attendance.start');
 Route::post('/attendance/end',[AttendanceController::class, 'end'])->name('attendance.end');
 Route::post('/attendance/rest_start',[RestController::class, 'restStart'])->name('attendance.rest_start');

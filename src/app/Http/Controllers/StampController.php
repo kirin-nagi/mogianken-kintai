@@ -86,7 +86,7 @@ class StampController extends Controller
                         'rest_start' => $detail->rest_start,
                     ],
                     [
-                        'rest_end' => $detail->rest_end,
+                        'rest_end' => $detail->rest_start,
                         'rest_time' => $minutes,
                     ]
                 );

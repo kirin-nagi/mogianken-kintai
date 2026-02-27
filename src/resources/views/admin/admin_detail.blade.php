@@ -110,9 +110,9 @@
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="time" name="rest_start" value="{{ old($attendance->rest_start ?$attendance->rest_start->format('H:i') : '' ) }}" />
+                    <input type="time" name="rest_start" value="{{ old('rest_start', optional($attendance->rest_start)->format('H:i')) }}" />
                     <span class="time-separator">～</span>
-                    <input type="time" name="rest_end" value="{{ old($attendance->rest_end ?$attendance->rest_end->format('H:i') : '' ) }}" />
+                    <input type="time" name="rest_end" value="{{ old('rest_end', optional($attendance->rest_end)->format('H:i')) }}" />
                 </div>
                 <div class="form__error">
                     @error('rest_start') {{ $message }}@enderror
@@ -126,9 +126,9 @@
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="time" name="rest_start2" value="{{ old($attendance->rest_start2 ?$attendance->rest_start2->format('H:i') : '' )}}" />
+                    <input type="time" name="rest_start2" value="{{ old('rest_start2', optional($attendance->rest_start2)->format('H:i')) }}" />
                     <span class="time-separator">～</span>
-                    <input type="time" name="rest_end2" value="{{ old($attendance->rest_end2 ?$attendance->rest_end2->format('H:i') : '' )}}" />
+                    <input type="time" name="rest_end2" value="{{ old('rest_end2', optional($attendance->rest_end2)->format('H:i')) }}" />
                 </div>
             </div>
         </div>
@@ -149,9 +149,7 @@
         </div>
         @endif
         <div class="form__button">
-            @if($approval && $approval->status === 0)
-            <span class="form__button-item">＊承認待ちのため修正できません</span>
-            @else
+            @if($canEdit)
             <button class="form__button-submit" type="submit">修正</button>
             @endif
         </div>
