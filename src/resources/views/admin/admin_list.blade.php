@@ -74,7 +74,7 @@
                     {{ $workTime }}
                     </span>
                     <span>
-                        <a href="{{ route('attendance.adminShowDetail', $first->id) }}" class="detail-item">詳細</a>
+                        <a href="{{ route('admin.attendance.showDetail', $first->id) }}" class="detail-item">詳細</a>
                     </span>
                 </div>
             </td>

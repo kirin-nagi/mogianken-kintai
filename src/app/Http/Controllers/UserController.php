@@ -47,8 +47,19 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
-    public function logout()
+    public function destroy(Request $request)
     {
-        return view('auth.login');
+        $user = Auth::user();
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        if($user && $user->role == 1){
+            return redirect()->route('admin.showLogin');
+        }
+
+        return redirect()->route('login');
     }
 }

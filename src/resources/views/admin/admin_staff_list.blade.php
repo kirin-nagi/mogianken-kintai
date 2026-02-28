@@ -11,13 +11,13 @@
         <div id="date" class="date">{{ $user->name }}さんの勤務</div>
     </div>
     <div class="month-navigation">
-        <a href="{{ route('admin.attendanceList', ['id' => $user->id,'month' => $prevMonth->format('Y-m')]) }}" class="prev-month">
+        <a href="{{ route('admin.attendance.list', ['id' => $user->id,'month' => $prevMonth->format('Y-m')]) }}" class="prev-month">
             ← 前月
         </a>
         <span class="current-month">
             📅  {{ $currentMonth->format('Y/m') }}
         </span>
-        <a href="{{ route('admin.attendanceList', ['id' => $user->id, 'month' => $nextMonth->format('Y-m')]) }}" class="next-month">
+        <a href="{{ route('admin.attendance.list', ['id' => $user->id, 'month' => $nextMonth->format('Y-m')]) }}" class="next-month">
             翌月 →
         </a>
     </div>
@@ -74,7 +74,7 @@
                     {{ gmdate('H:i', $totalWorkSeconds) }}
                     </span>
                     <span>
-                        <a href="{{ route('attendance.adminShowDetail', $first->id) }}" class="detail-item">詳細</a>
+                        <a href="{{ route('admin.attendance.showDetail', $first->id) }}" class="detail-item">詳細</a>
                     </span>
                     @else
                     <span></span>

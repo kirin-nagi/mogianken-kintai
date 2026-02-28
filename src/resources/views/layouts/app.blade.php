@@ -25,6 +25,9 @@
                         <a class="header-nav__link" href="/stamp_correction_request/list">申請一覧
                         </a>
                         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"class="header-nav__link">ログアウト</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
                 @else
@@ -34,6 +37,9 @@
                         <a class="header-nav__link" href="/attendance/list">勤務一覧</a>
                         <a class="header-nav__link" href="/stamp_correction_request/list">申請</a>
                         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"class="header-nav__link">ログアウト</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
                 @endif

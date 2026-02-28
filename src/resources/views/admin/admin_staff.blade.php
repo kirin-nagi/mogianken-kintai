@@ -31,7 +31,7 @@
                         {{ $user->email }}
                     </span>
                     <span>
-                        <a href="{{ route('admin.attendanceList', $user->id) }}" class="detail-item">詳細</a>
+                        <a href="{{ route('admin.attendance.list', $user->id) }}" class="detail-item">詳細</a>
                     </span>
                 </div>
             </td>

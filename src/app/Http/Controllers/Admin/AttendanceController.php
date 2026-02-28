@@ -118,7 +118,7 @@ class AttendanceController extends Controller
     ]);
     });
 
-        return redirect()->route('admin.attendanceList');
+        return redirect()->route('admin.attendance.detail');
     }
 
     // 勤怠詳細画面
