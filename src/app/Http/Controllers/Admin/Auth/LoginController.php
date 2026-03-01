@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
 use App\Models\User;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -19,7 +20,21 @@ class LoginController extends Controller
     public function AdminLogin(LoginRequest $request)
     {
         if(! Auth::attempt($request->only('email', 'password'))){
-            return back();
+            throw ValidationException::withMessages([
+                'email' => 'ログイン情報が登録されておりません',
+                'password' => 'ログイン情報が登録されておりません',
+            ]);
+        }
+
+        $user = Auth::user();
+
+        if($user->role != 1){
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => 'ログイン情報が登録されておりません',
+                'password' => 'ログイン情報が登録されておりません',
+            ]);
         }
 
         $request->session()->regenerate();

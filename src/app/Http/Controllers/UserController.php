@@ -10,6 +10,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use App\Models\Rest;
 use App\Models\Attendance;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -39,27 +40,16 @@ class UserController extends Controller
     {
         $user_info = $request->validated();
 
-        if(Auth::attempt($user_info)){
-            $request->session()->regenerate();
-            return redirect('/attendance');
+        if(!Auth::attempt($user_info)){
+            throw ValidationException::withMessages([
+                'email' => 'ログイン情報が登録されておりません',
+                'password' => 'ログイン情報が登録されておりません',
+            ]);
+
         }
 
-        return redirect()->route('login');
-    }
+        $request->session()->regenerate();
 
-    public function destroy(Request $request)
-    {
-        $user = Auth::user();
-
-        Auth::logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        if($user && $user->role == 1){
-            return redirect()->route('admin.showLogin');
-        }
-
-        return redirect()->route('login');
+        return redirect('/attendance');
     }
 }

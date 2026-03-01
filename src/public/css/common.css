@@ -36,9 +36,28 @@
 .header-nav__link {
     color: #ddd;
     margin-right: 50px;
-}
-
-.header-nav__link,
-.header-nav__button {
     text-decoration: none;
 }
+
+.header-nav__button{
+    background: none;
+    background-color: black;
+    border: none;
+    padding: 0;
+    color: #ddd;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.header-nav__button:hover{
+    text-decoration: underline;
+    opacity: 0.85;
+}
+
+.header-nav__button:focus{
+    outline: none;
+}
+
+
+

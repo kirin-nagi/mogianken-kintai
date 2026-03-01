@@ -36,17 +36,20 @@ Route::get('staff/list', [AdminAttendanceController::class, 'showAdminStaff'])->
 Route::get('attendance/staff/{id}', [AdminAttendanceController::class, 'showAdminList'])->name('attendance.list');
 });
 
+Route::post('/custom-logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('custom.logout');
+
 Route::middleware('auth')->group(function(){
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-Route::get('/attendance', [AttendanceController::class, 'showAttendance'])->name('attendance.show');
-Route::post('/attendance/start',[AttendanceController::class, 'start'])->name('attendance.start');
-Route::post('/attendance/end',[AttendanceController::class, 'end'])->name('attendance.end');
-Route::post('/attendance/rest_start',[RestController::class, 'restStart'])->name('attendance.rest_start');
-Route::post('/attendance/rest_end',[RestController::class, 'restEnd'])->name('attendance.rest_end');
-Route::get('/attendance/list',[AttendanceController::class, 'list'])->name('attendance.list');
-Route::get('/attendance/detail/{id}', [AttendanceController::class, 'showDetail'])->name('attendance.showDetail');
-Route::post('/attendance/detail/{id}', [AttendanceController::class, 'detailStore'])->name('attendance.detail');
-Route::get('/stamp_correction_request/list',[StampController::class, 'showStamp'])->name('stampList');
-Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [StampController::class, 'showCorrection'])->name('stamp.showCorrection');
-Route::post('/stamp_correction_request/approve/{attendance_correct_request_id}', [StampController::class, 'stampCorrection'])->name('stamp.stampCorrection');
+    Route::get('/attendance', [AttendanceController::class, 'showAttendance'])->name('attendance.show');
+    Route::post('/attendance/start',[AttendanceController::class, 'start'])->name('attendance.start');
+    Route::post('/attendance/end',[AttendanceController::class, 'end'])->name('attendance.end');
+    Route::post('/attendance/rest_start',[RestController::class, 'restStart'])->name('attendance.rest_start');
+    Route::post('/attendance/rest_end',[RestController::class, 'restEnd'])->name('attendance.rest_end');
+    Route::get('/attendance/list',[AttendanceController::class, 'list'])->name('attendance.list');
+    Route::get('/attendance/detail/{id}', [AttendanceController::class, 'showDetail'])->name('attendance.showDetail');
+    Route::post('/attendance/detail/{id}', [AttendanceController::class, 'detailStore'])->name('attendance.detail');
+    Route::get('/stamp_correction_request/list',[StampController::class, 'showStamp'])->name('stampList');
+    Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [StampController::class, 'showCorrection'])->name('stamp.showCorrection');
+    Route::post('/stamp_correction_request/approve/{attendance_correct_request_id}', [StampController::class, 'stampCorrection'])->name('stamp.stampCorrection');
 });

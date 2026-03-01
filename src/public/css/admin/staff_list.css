@@ -90,6 +90,7 @@ table tr:first-child .empty-row {
 }
 
 .detail-holiday {
+    transform: translateY(-25px);
     color: black;
     font-weight: bold;
 }
