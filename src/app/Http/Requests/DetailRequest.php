@@ -51,14 +51,19 @@ class DetailRequest extends FormRequest
             if($startWork && $endWork && $startWork >= $endWork){
                 $validator->errors()->add(
                     'start_work',
-                    '出勤時間が不適切な値です'
+                    '出勤時間もしくは退勤時間が不適切な値です'
+                );
+
+                $validator->errors()->add(
+                    'end_work',
+                    '出勤時間もしくは退勤時間が不適切な値です'
                 );
             }
 
             if($restStart && $endWork && $restStart >= $endWork){
                 $validator->errors()->add(
                     'rest_start',
-                    '休憩時間が不適切です'
+                    '休憩時間が不適切な値です'
                 );
             }
 
