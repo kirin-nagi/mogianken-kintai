@@ -46,7 +46,7 @@ class AttendanceController extends Controller
     $date = $attendance->work_date->format('Y-m-d');
 
     $approval = Approval::where('attendance_id', $attendance->id)
-    ->letest()
+    ->latest()
     ->first();
 
     if($approval){
@@ -80,7 +80,7 @@ class AttendanceController extends Controller
     );
 
     $workMinutes = $detail->end_work->diffInMinutes($detail->start_work);
-    $reatMinutes = 0;
+    $restMinutes = 0;
 
     Rest::where('attendance_id', $attendance->id)->delete();
 
