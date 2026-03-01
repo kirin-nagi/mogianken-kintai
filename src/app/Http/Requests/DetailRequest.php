@@ -60,6 +60,13 @@ class DetailRequest extends FormRequest
                 );
             }
 
+            if($restStart && $startWork && $restStart < $startWork) {
+                $validator->errors()->add(
+                    'rest_start',
+                    '休憩時間が不適切な値です'
+                );
+            }
+
             if($restStart && $endWork && $restStart >= $endWork){
                 $validator->errors()->add(
                     'rest_start',
