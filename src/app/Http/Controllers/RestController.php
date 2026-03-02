@@ -11,10 +11,9 @@ class RestController extends Controller
 {
     public function restStart()
     {
-        // 休憩開始
+
         $attendance = Attendance::todayForUser();
 
-        // 出勤してなくて、退勤済なら何もしない
         if(!$attendance || $attendance->isFinished() || $attendance->isOnRest())
         {
             return redirect()->route('attendance.show');
@@ -28,7 +27,6 @@ class RestController extends Controller
         return redirect()->route('attendance.show');
     }
 
-    // 休憩終わり
     public function restEnd()
     {
         $attendance = Attendance::todayForUser();
@@ -37,7 +35,6 @@ class RestController extends Controller
             return redirect()->route('attendance.show');
         }
 
-        // 最新の休憩
         $rest = $attendance->rests()->whereNull('rest_end')->latest()->first();
 
         if(!$rest) {

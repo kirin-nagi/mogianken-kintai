@@ -30,17 +30,14 @@ class AttendanceController extends Controller
         ->with(['user', 'rests'])
         ->get()
         ->groupBy('user_id');
-        // ↑複数表示させたいからkeyじゃなくてgroup
 
         return view('admin.admin_list', compact('attendances', 'currentDay', 'prevDay','nextDay'));
     }
 
-    //  勤怠詳細画面
     public function adminDetailStore(DetailRequest $request, $id)
     {
     DB::transaction(function () use ($request,$id) {
 
-        // 勤怠レコードを取得
     $attendance = Attendance::findOrFail($id);
     $user = $attendance->user;
     $date = $attendance->work_date->format('Y-m-d');
@@ -108,7 +105,6 @@ class AttendanceController extends Controller
         ]);
     }
 
-    // DBの保存
     $attendance->update([
         'start_work' => $detail->start_work,
         'end_work' =>   $detail->end_work,
@@ -121,7 +117,6 @@ class AttendanceController extends Controller
         return redirect()->route('admin.attendance.detail');
     }
 
-    // 勤怠詳細画面
     public function showAdminDetail($id)
     {
     $user = Auth::user();
@@ -129,7 +124,6 @@ class AttendanceController extends Controller
 
         $attendance = Attendance::findOrFail($id);
 
-        // 修正申請
         $approval = Approval::where('attendance_id', $attendance->id)
         ->latest()
         ->first();
@@ -150,7 +144,6 @@ class AttendanceController extends Controller
             ]);
     }
 
-    // スタッフ一覧画面
     public function showAdminStaff()
     {
         $users = User::where('role', 0)->get();
@@ -158,24 +151,19 @@ class AttendanceController extends Controller
     return view('admin.admin_staff', compact('users'));
     }
 
-    // スタッフ別勤怠一覧
     public function showAdminList(Request $request, $id)
     {
-        // 見たい月表示
+
         $currentMonth = $request->month ? Carbon::createFromFormat('Y-m', $request->month) : now()->startOfMonth();
 
-        // 前月・翌月
         $prevMonth = $currentMonth->copy()->subMonth();
         $nextMonth = $currentMonth->copy()->addMonth();
 
-        // 月の範囲
         $startOfMonth = $currentMonth->copy()->startOfMonth();
         $endOfMonth = $currentMonth->copy()->endOfMonth();
 
-        // 月の全日付
         $dates = CarbonPeriod::create($startOfMonth, $endOfMonth);
 
-        // 勤怠取得
         $attendances = Attendance::where('user_id', $id)
         ->whereBetween('start_work', [$startOfMonth, $endOfMonth])
         ->with('rests')

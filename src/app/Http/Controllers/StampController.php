@@ -39,7 +39,7 @@ class StampController extends Controller
 
         return view('stamp.stamp_list', compact('approvals'));
     }
-
+//
     public function showCorrection($id)
     {
         $approval = Approval::where('id', $id)
